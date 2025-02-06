@@ -1,6 +1,13 @@
 "use client";
 
-import { Box, Container, Typography, Grid, Divider } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Grid,
+  Divider,
+  Button,
+} from "@mui/material";
 import Image from "next/image";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -161,6 +168,24 @@ export default function Services() {
             Let's discuss your wedding vision and how we can help bring it to
             life.
           </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            href="/contact"
+            sx={{
+              bgcolor: "white",
+              color: "#1a1a1a",
+              px: 6,
+              py: 2,
+              "&:hover": {
+                bgcolor: "#f8f8f8",
+                transform: "translateY(-2px)",
+              },
+              transition: "all 0.3s ease",
+            }}
+          >
+            Contact Us
+          </Button>
         </Container>
       </Box>
 
