@@ -5,24 +5,95 @@
       "services": "Services",
       "about": "About",
       "contact": "Contact"
+    },
+    "brand": {
+      "name": "SONDER"
     }
   },
   "home": {
     "hero": {
       "title": "Capturing Timeless Moments",
-      "subtitle": "Professional Wedding Photography in Hungary"
+      "subtitle": "Professional Wedding Photography in Hungary",
+      "cta": "Book a Consultation"
+    },
+    "portfolio": {
+      "title": "Recent Works",
+      "subtitle": "A glimpse into our latest wedding photography collections"
     }
   },
   "contact": {
-    "title": "Get in Touch",
+    "title": "Contact us",
     "subtitle": "Let's create something beautiful together. Reach out to us through any of these channels or fill out the form.",
     "form": {
+      "title": "Get in Touch",
       "firstName": "First Name",
       "lastName": "Last Name",
       "email": "Email",
       "phone": "Phone",
       "message": "Message",
       "submit": "Send Message"
+    },
+    "info": {
+      "phone": {
+        "title": "Phone",
+        "details": "+1 (555) 123-4567",
+        "description": "Available Monday-Friday, 9am-6pm"
+      },
+      "email": {
+        "title": "Email",
+        "details": "info@sonderphotography.com",
+        "description": "We'll respond within 24 hours"
+      },
+      "location": {
+        "title": "Studio Location",
+        "details": "123 Creative Studio St.",
+        "description": "New York, NY 10001"
+      }
+    },
+    "cta": {
+      "title": "Ready to Create Something Beautiful?",
+      "subtitle": "Let's discuss your wedding vision and how we can help bring it to life.",
+      "button": "Contact Us"
+    }
+  },
+  "portfolio": {
+    "title": "Our Portfolio",
+    "subtitle": "Moments Captured with Love and Artistry",
+    "images": {
+      "ceremony": "Wedding Ceremony",
+      "bride": "Bride Portrait",
+      "details": "Wedding Details",
+      "couple": "Couple Portrait",
+      "reception": "Wedding Reception",
+      "dance": "First Dance"
+    }
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Comprehensive Wedding Solutions for Your Perfect Day",
+    "items": {
+      "photography": {
+        "title": "Wedding Photography",
+        "description": "Capturing your special moments with artistic vision and attention to detail. Our photography packages include engagement sessions, full-day wedding coverage, and carefully curated digital galleries."
+      },
+      "videography": {
+        "title": "Wedding Videography",
+        "description": "Professional cinematography that tells your love story. From getting ready to the last dance, we create beautiful films that you'll treasure forever."
+      },
+      "websites": {
+        "title": "Wedding Websites",
+        "description": "Custom-designed wedding websites that keep your guests informed and excited. Share your love story, event details, and manage RSVPs all in one beautiful place."
+      },
+      "invitations": {
+        "title": "Wedding Invitations",
+        "description": "Elegant and personalized wedding invitations that set the tone for your special day. From save-the-dates to thank you cards, we create cohesive stationery suites."
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "logout": "Logout"
     }
   }
 }

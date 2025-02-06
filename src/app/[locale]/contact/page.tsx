@@ -14,30 +14,28 @@ import Footer from "@/app/_components/footer/Footer";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 
-const contactInfo = [
-  {
-    icon: FaPhone,
-    title: "Phone",
-    details: "+1 (555) 123-4567",
-    description: "Available Monday-Friday, 9am-6pm",
-  },
-  {
-    icon: FaEnvelope,
-    title: "Email",
-    details: "info@sonderphotography.com",
-    description: "We'll respond within 24 hours",
-  },
-  {
-    icon: FaMapMarkerAlt,
-    title: "Studio Location",
-    details: "123 Creative Studio St.",
-    description: "New York, NY 10001",
-  },
-];
-
 export default function Contact() {
   const t = useTranslations("contact");
-
+  const contactInfo = [
+    {
+      icon: FaPhone,
+      title: t("info.phone.title"),
+      details: t("info.phone.details"),
+      description: t("info.phone.description"),
+    },
+    {
+      icon: FaEnvelope,
+      title: t("info.email.title"),
+      details: t("info.email.details"),
+      description: t("info.email.description"),
+    },
+    {
+      icon: FaMapMarkerAlt,
+      title: t("info.location.title"),
+      details: t("info.location.details"),
+      description: t("info.location.description"),
+    },
+  ];
   return (
     <Box>
       <Header />
@@ -258,42 +256,7 @@ export default function Contact() {
           </Grid>
         </Container>
       </Box>
-
       <Footer />
-
-      {/* Contact CTA */}
-      <Box sx={{ bgcolor: "#1a1a1a", color: "white", py: 16 }}>
-        <Container maxWidth="md" sx={{ textAlign: "center" }}>
-          <Typography variant="h3" sx={{ mb: 3, fontWeight: 600 }}>
-            Ready to Create Something Beautiful?
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ mb: 4, opacity: 0.9, fontSize: "1.1rem" }}
-          >
-            Let's discuss your wedding vision and how we can help bring it to
-            life.
-          </Typography>
-          <Button
-            variant="contained"
-            size="large"
-            href="/contact"
-            sx={{
-              bgcolor: "white",
-              color: "#1a1a1a",
-              px: 6,
-              py: 2,
-              "&:hover": {
-                bgcolor: "#f8f8f8",
-                transform: "translateY(-2px)",
-              },
-              transition: "all 0.3s ease",
-            }}
-          >
-            Contact Us
-          </Button>
-        </Container>
-      </Box>
     </Box>
   );
 }
