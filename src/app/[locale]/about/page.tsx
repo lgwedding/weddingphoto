@@ -128,7 +128,7 @@ export default function About() {
         <Container maxWidth="lg">
           <Typography
             variant="h3"
-            sx={{ textAlign: "center", mb: 8, fontWeight: 600 }}
+            sx={{ textAlign: "center", mb: 8, fontWeight: 600, color: "#666" }}
           >
             Meet Our Team
           </Typography>
@@ -162,7 +162,10 @@ export default function About() {
                       style={{ objectFit: "cover" }}
                     />
                   </Box>
-                  <Typography variant="h5" sx={{ mb: 1, fontWeight: 600 }}>
+                  <Typography
+                    variant="h5"
+                    sx={{ mb: 1, fontWeight: 600, color: "#666" }}
+                  >
                     {member.name}
                   </Typography>
                   <Typography variant="subtitle1" sx={{ mb: 2, color: "#666" }}>

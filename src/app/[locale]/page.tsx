@@ -102,6 +102,7 @@ export default function Home() {
               mb: 2,
               fontWeight: 600,
               letterSpacing: "-0.5px",
+              color: "#666",
             }}
           >
             Recent Works

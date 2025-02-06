@@ -7,7 +7,10 @@ export default function Footer() {
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           <Grid item xs={12} md={4}>
-            <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, fontWeight: 600, color: "#666" }}
+            >
               SONDER
             </Typography>
             <Typography variant="body2" sx={{ color: "#666" }}>
@@ -17,7 +20,7 @@ export default function Footer() {
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
+            <Typography variant="h6" sx={{ mb: 2, color: "#666" }}>
               Contact
             </Typography>
             <Typography variant="body2" sx={{ color: "#666" }}>
@@ -32,7 +35,7 @@ export default function Footer() {
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
+            <Typography variant="h6" sx={{ mb: 2, color: "#666" }}>
               Follow Us
             </Typography>
             <Box sx={{ display: "flex", gap: 2 }}>
