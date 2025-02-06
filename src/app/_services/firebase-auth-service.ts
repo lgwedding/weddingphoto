@@ -1,8 +1,6 @@
-import React from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../_config/firebase-config";
-import useUserStore from "../store/userStore";
 
 export const firebaseAuthService = () => {
   const app = initializeApp(firebaseConfig);
