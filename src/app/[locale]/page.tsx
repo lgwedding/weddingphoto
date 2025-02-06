@@ -4,93 +4,22 @@ import { Box, Container, Typography, Button, Grid } from "@mui/material";
 import Image from "next/image";
 import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
+import HeroSection from "../_components/hero/HeroSection";
+import { useTranslations } from "next-intl";
 
 export default function Home() {
+  const t = useTranslations("home");
   return (
     <Box>
       <Header />
 
       {/* Hero Section */}
-      <Box
-        sx={{
-          height: "100vh",
-          position: "relative",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Image
-          src="https://images.unsplash.com/photo-1519741497674-611481863552"
-          alt="Wedding Photography"
-          fill
-          style={{ objectFit: "cover" }}
-          priority
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0,0,0,0.4)",
-          }}
-        />
-        <Box
-          sx={{
-            position: "relative",
-            textAlign: "center",
-            color: "white",
-            zIndex: 1,
-            p: 4,
-          }}
-        >
-          <Typography
-            variant="h1"
-            sx={{
-              fontSize: { xs: "2.5rem", md: "4.5rem" },
-              fontWeight: 600,
-              mb: 3,
-              letterSpacing: "-1px",
-              maxWidth: 900,
-              mx: "auto",
-            }}
-          >
-            Capturing Timeless Moments
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              mb: 6,
-              fontWeight: 300,
-              opacity: 0.9,
-              maxWidth: 600,
-              mx: "auto",
-            }}
-          >
-            Professional Wedding Photography in Hungary
-          </Typography>
-          <Button
-            variant="contained"
-            size="large"
-            href="/contact"
-            sx={{
-              bgcolor: "white",
-              color: "#1a1a1a",
-              px: 4,
-              py: 1.5,
-              "&:hover": {
-                bgcolor: "#f8f8f8",
-                transform: "translateY(-2px)",
-              },
-              transition: "all 0.3s ease",
-            }}
-          >
-            Book a Consultation
-          </Button>
-        </Box>
-      </Box>
+      <HeroSection
+        imageUrl="https://images.unsplash.com/photo-1519741497674-611481863552"
+        title={t("hero.title")}
+        subtitle={t("hero.subtitle")}
+        height="100vh"
+      />
 
       {/* Portfolio Preview */}
       <Box sx={{ py: { xs: 12, md: 16 }, bgcolor: "#f8f8f8" }}>

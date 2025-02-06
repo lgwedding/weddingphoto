@@ -90,9 +90,14 @@
       }
     }
   },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Passionate About Capturing Your Special Moments"
+  },
   "auth": {
     "login": {
       "title": "Sign In",
+
       "logout": "Logout"
     }
   }

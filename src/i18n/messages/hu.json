@@ -90,6 +90,10 @@
       }
     }
   },
+  "about": {
+    "title": "Rólunk",
+    "subtitle": "A legjobb esküvői fotózásért és videózásért mi felelünk"
+  },
   "auth": {
     "login": {
       "title": "Bejelentkezés",

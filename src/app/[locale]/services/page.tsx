@@ -12,7 +12,8 @@ import Image from "next/image";
 import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
 import { FaCamera, FaVideo, FaGlobe, FaEnvelope } from "react-icons/fa";
-
+import HeroSection from "@/app/_components/hero/HeroSection";
+import { useTranslations } from "next-intl";
 const services = [
   {
     title: "Wedding Photography",
@@ -45,53 +46,18 @@ const services = [
 ];
 
 export default function Services() {
+  const t = useTranslations("services");
   return (
     <Box>
       <Header />
 
       {/* Hero Section */}
-      <Box
-        sx={{
-          height: "100vh",
-          position: "relative",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Image
-          src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92"
-          alt="Wedding Services"
-          fill
-          style={{ objectFit: "cover" }}
-          priority
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            textAlign: "center",
-            color: "white",
-            zIndex: 1,
-            p: 4,
-            backgroundColor: "rgba(0,0,0,0.3)",
-            borderRadius: 2,
-          }}
-        >
-          <Typography
-            variant="h1"
-            sx={{
-              fontSize: { xs: "2.5rem", md: "4rem" },
-              fontWeight: 600,
-              mb: 2,
-            }}
-          >
-            Our Services
-          </Typography>
-          <Typography variant="h5" sx={{ mb: 4 }}>
-            Comprehensive Wedding Solutions for Your Perfect Day
-          </Typography>
-        </Box>
-      </Box>
+      <HeroSection
+        imageUrl="https://images.unsplash.com/photo-1606216794074-735e91aa2c92"
+        title={t("title")}
+        subtitle={t("subtitle")}
+        height="100vh"
+      />
 
       {/* Services Section */}
       {services.map((service, index) => (
