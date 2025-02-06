@@ -80,11 +80,13 @@ export default function Header() {
               color="inherit"
               sx={{
                 color: "#1a1a1a",
-                ...(item.label === "Contact" && {
-                  bgcolor: "#1a1a1a",
-                  color: "white",
-                  "&:hover": { bgcolor: "#333" },
-                }),
+                ...(item.label === "Contact" || item.label === "Kapcsolat"
+                  ? {
+                      bgcolor: "#1a1a1a",
+                      color: "white",
+                      "&:hover": { bgcolor: "#333" },
+                    }
+                  : {}),
               }}
               href={item.href}
             >
