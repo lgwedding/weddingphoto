@@ -12,26 +12,42 @@ import {
 import { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
-import Link from "next/link";
+import { Link as IntlLink } from "@/navigation";
 import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
+import { GB, HU } from "country-flag-icons/react/3x2";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const t = useTranslations("common.menu");
   const pathname = usePathname();
+  const { locale: currentLocale } = useParams();
 
   const menuItems = [
     { label: t("portfolio"), href: "/portfolio" },
     { label: t("services"), href: "/services" },
     { label: t("about"), href: "/about" },
     { label: t("contact"), href: "/contact" },
-  ];
+  ].map((item) => ({
+    ...item,
+    href: `/${currentLocale}${item.href}`,
+  }));
 
   const languages = [
     { code: "en", label: "English" },
     { code: "hu", label: "Magyar" },
   ];
+
+  const FlagIcon = ({ locale }: { locale: string }) => {
+    switch (locale) {
+      case "en":
+        return <GB width={24} height={24} />;
+      case "hu":
+        return <HU width={24} height={24} />;
+      default:
+        return null;
+    }
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -47,14 +63,14 @@ export default function Header() {
       }}
     >
       <Toolbar sx={{ justifyContent: "space-between" }}>
-        <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
+        <IntlLink href="/" style={{ textDecoration: "none", color: "inherit" }}>
           <Typography
             variant="h6"
             sx={{ color: "#1a1a1a", fontWeight: 600, letterSpacing: "-0.5px" }}
           >
             SONDER
           </Typography>
-        </Link>
+        </IntlLink>
 
         {/* Desktop Menu */}
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: 4 }}>
@@ -75,6 +91,23 @@ export default function Header() {
               {item.label}
             </Button>
           ))}
+        </Box>
+
+        <Box sx={{ display: { xs: "none", md: "flex" }, ml: 2 }}>
+          {languages
+            .filter((lang) => lang.code !== currentLocale)
+            .map((lang) => (
+              <IntlLink
+                key={lang.code}
+                href={pathname.replace(`/${currentLocale}`, "")}
+                locale={lang.code as "en" | "hu"}
+                style={{ textDecoration: "none" }}
+              >
+                <IconButton size="small" sx={{ ml: 1 }}>
+                  <FlagIcon locale={lang.code} />
+                </IconButton>
+              </IntlLink>
+            ))}
         </Box>
 
         {/* Mobile Menu Button */}
