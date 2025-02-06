@@ -2,9 +2,11 @@
 
 import { Box, Container, Typography, Grid } from "@mui/material";
 import Image from "next/image";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "@/app/_components/header/Header";
+import Footer from "@/app/_components/footer/Footer";
 import Masonry from "@mui/lab/Masonry";
+import HeroSection from "@/app/_components/hero/HeroSection";
+import { useTranslations } from "next-intl";
 
 const portfolioImages = [
   {
@@ -40,54 +42,18 @@ const portfolioImages = [
 ];
 
 export default function Portfolio() {
+  const t = useTranslations("portfolio");
   return (
     <Box>
       <Header />
 
       {/* Hero Section */}
-      <Box
-        sx={{
-          height: "50vh",
-          position: "relative",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          mb: 8,
-        }}
-      >
-        <Image
-          src="https://images.unsplash.com/photo-1519741497674-611481863552"
-          alt="Portfolio Hero"
-          fill
-          style={{ objectFit: "cover" }}
-          priority
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            textAlign: "center",
-            color: "white",
-            zIndex: 1,
-            p: 4,
-            backgroundColor: "rgba(0,0,0,0.3)",
-            borderRadius: 2,
-          }}
-        >
-          <Typography
-            variant="h1"
-            sx={{
-              fontSize: { xs: "2.5rem", md: "4rem" },
-              fontWeight: 600,
-              mb: 2,
-            }}
-          >
-            Our Portfolio
-          </Typography>
-          <Typography variant="h5">
-            Moments Captured with Love and Artistry
-          </Typography>
-        </Box>
-      </Box>
+      <HeroSection
+        imageUrl="https://images.unsplash.com/photo-1519741497674-611481863552"
+        title={t("title")}
+        subtitle={t("subtitle")}
+        height="50vh"
+      />
 
       {/* Portfolio Gallery */}
       <Container maxWidth="xl" sx={{ mb: 8 }}>

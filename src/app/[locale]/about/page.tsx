@@ -2,9 +2,10 @@
 
 import { Box, Container, Typography, Grid } from "@mui/material";
 import Image from "next/image";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-
+import Header from "@/app/_components/header/Header";
+import Footer from "@/app/_components/footer/Footer";
+import HeroSection from "@/app/_components/hero/HeroSection";
+import { useTranslations } from "next-intl";
 const teamMembers = [
   {
     name: "Sarah Johnson",
@@ -30,54 +31,18 @@ const teamMembers = [
 ];
 
 export default function About() {
+  const t = useTranslations("about");
   return (
     <Box>
       <Header />
 
       {/* Hero Section */}
-      <Box
-        sx={{
-          height: "50vh",
-          position: "relative",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          mb: 8,
-        }}
-      >
-        <Image
-          src="https://images.unsplash.com/photo-1604017011826-d3b4c23f8914"
-          alt="Studio Equipment"
-          fill
-          style={{ objectFit: "cover" }}
-          priority
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            textAlign: "center",
-            color: "white",
-            zIndex: 1,
-            p: 4,
-            backgroundColor: "rgba(0,0,0,0.3)",
-            borderRadius: 2,
-          }}
-        >
-          <Typography
-            variant="h1"
-            sx={{
-              fontSize: { xs: "2.5rem", md: "4rem" },
-              fontWeight: 600,
-              mb: 2,
-            }}
-          >
-            Our Story
-          </Typography>
-          <Typography variant="h5">
-            Passionate About Capturing Your Special Moments
-          </Typography>
-        </Box>
-      </Box>
+      <HeroSection
+        imageUrl="https://images.unsplash.com/photo-1604017011826-d3b4c23f8914"
+        title={t("title")}
+        subtitle={t("subtitle")}
+        height="50vh"
+      />
 
       {/* About Content */}
       <Container maxWidth="lg" sx={{ mb: 12 }}>
@@ -128,7 +93,7 @@ export default function About() {
         <Container maxWidth="lg">
           <Typography
             variant="h3"
-            sx={{ textAlign: "center", mb: 8, fontWeight: 600 }}
+            sx={{ textAlign: "center", mb: 8, fontWeight: 600, color: "#666" }}
           >
             Meet Our Team
           </Typography>
@@ -162,7 +127,10 @@ export default function About() {
                       style={{ objectFit: "cover" }}
                     />
                   </Box>
-                  <Typography variant="h5" sx={{ mb: 1, fontWeight: 600 }}>
+                  <Typography
+                    variant="h5"
+                    sx={{ mb: 1, fontWeight: 600, color: "#666" }}
+                  >
                     {member.name}
                   </Typography>
                   <Typography variant="subtitle1" sx={{ mb: 2, color: "#666" }}>
