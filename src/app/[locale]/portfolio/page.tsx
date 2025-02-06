@@ -2,8 +2,8 @@
 
 import { Box, Container, Typography, Grid } from "@mui/material";
 import Image from "next/image";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "@/app/_components/header/Header";
+import Footer from "@/app/_components/footer/Footer";
 import Masonry from "@mui/lab/Masonry";
 
 const portfolioImages = [

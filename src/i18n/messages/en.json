@@ -1,0 +1,28 @@
+{
+  "common": {
+    "menu": {
+      "portfolio": "Portfolio",
+      "services": "Services",
+      "about": "About",
+      "contact": "Contact"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Capturing Timeless Moments",
+      "subtitle": "Professional Wedding Photography in Hungary"
+    }
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Let's create something beautiful together. Reach out to us through any of these channels or fill out the form.",
+    "form": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "submit": "Send Message"
+    }
+  }
+}

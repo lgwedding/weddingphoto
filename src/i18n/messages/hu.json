@@ -1,0 +1,28 @@
+{
+  "common": {
+    "menu": {
+      "portfolio": "Portfólió",
+      "services": "Szolgáltatások",
+      "about": "Rólunk",
+      "contact": "Kapcsolat"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Időtlen pillanatok megörökítése",
+      "subtitle": "Professzionális esküvői fotózás Magyarországon"
+    }
+  },
+  "contact": {
+    "title": "Kapcsolatfelvétel",
+    "subtitle": "Alkossunk együtt valami gyönyörűt. Keressen minket bármely csatornán keresztül, vagy töltse ki az űrlapot.",
+    "form": {
+      "firstName": "Keresztnév",
+      "lastName": "Vezetéknév",
+      "email": "Email",
+      "phone": "Telefon",
+      "message": "Üzenet",
+      "submit": "Üzenet küldése"
+    }
+  }
+}

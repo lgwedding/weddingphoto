@@ -9,9 +9,10 @@ import {
   Button,
 } from "@mui/material";
 import Image from "next/image";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "@/app/_components/header/Header";
+import Footer from "@/app/_components/footer/Footer";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { useTranslations } from "next-intl";
 
 const contactInfo = [
   {
@@ -35,6 +36,8 @@ const contactInfo = [
 ];
 
 export default function Contact() {
+  const t = useTranslations("contact");
+
   return (
     <Box>
       <Header />
@@ -80,7 +83,7 @@ export default function Contact() {
                   letterSpacing: "-1px",
                 }}
               >
-                Get in Touch
+                {t("title")}
               </Typography>
               <Typography
                 sx={{
@@ -90,8 +93,7 @@ export default function Contact() {
                   fontSize: "1.1rem",
                 }}
               >
-                Let's create something beautiful together. Reach out to us
-                through any of these channels or fill out the form.
+                {t("subtitle")}
               </Typography>
 
               <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
@@ -159,7 +161,7 @@ export default function Contact() {
                     WebkitTextFillColor: "transparent",
                   }}
                 >
-                  Send Us a Message
+                  {t("form.title")}
                 </Typography>
 
                 <Box
@@ -174,7 +176,7 @@ export default function Contact() {
                     <Grid item xs={12} md={6}>
                       <TextField
                         fullWidth
-                        label="First Name"
+                        label={t("form.firstName")}
                         variant="outlined"
                         sx={{
                           "& .MuiOutlinedInput-root": {
@@ -186,7 +188,7 @@ export default function Contact() {
                     <Grid item xs={12} md={6}>
                       <TextField
                         fullWidth
-                        label="Last Name"
+                        label={t("form.lastName")}
                         variant="outlined"
                         sx={{
                           "& .MuiOutlinedInput-root": {
@@ -199,7 +201,7 @@ export default function Contact() {
 
                   <TextField
                     fullWidth
-                    label="Email"
+                    label={t("form.email")}
                     variant="outlined"
                     sx={{
                       "& .MuiOutlinedInput-root": {
@@ -210,7 +212,7 @@ export default function Contact() {
 
                   <TextField
                     fullWidth
-                    label="Phone"
+                    label={t("form.phone")}
                     variant="outlined"
                     sx={{
                       "& .MuiOutlinedInput-root": {
@@ -221,7 +223,7 @@ export default function Contact() {
 
                   <TextField
                     fullWidth
-                    label="Message"
+                    label={t("form.message")}
                     multiline
                     rows={6}
                     variant="outlined"
@@ -248,7 +250,7 @@ export default function Contact() {
                       transition: "all 0.3s ease",
                     }}
                   >
-                    Send Message
+                    {t("form.submit")}
                   </Button>
                 </Box>
               </Box>

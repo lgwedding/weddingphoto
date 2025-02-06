@@ -13,15 +13,24 @@ import { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const t = useTranslations("common.menu");
+  const pathname = usePathname();
 
   const menuItems = [
-    { label: "Portfolio", href: "/portfolio" },
-    { label: "Services", href: "/services" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
+    { label: t("portfolio"), href: "/portfolio" },
+    { label: t("services"), href: "/services" },
+    { label: t("about"), href: "/about" },
+    { label: t("contact"), href: "/contact" },
+  ];
+
+  const languages = [
+    { code: "en", label: "English" },
+    { code: "hu", label: "Magyar" },
   ];
 
   const handleDrawerToggle = () => {
