@@ -1,0 +1,103 @@
+{
+  "common": {
+    "menu": {
+      "portfolio": "Portfólió",
+      "services": "Szolgáltatások",
+      "about": "Rólunk",
+      "contact": "Kapcsolat"
+    },
+    "brand": {
+      "name": "SONDER"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Időtlen pillanatok megörökítése",
+      "subtitle": "Professzionális esküvői fotózás Magyarországon",
+      "cta": "Időpont egyeztetés"
+    },
+    "portfolio": {
+      "title": "Legújabb munkáink",
+      "subtitle": "Betekintés a legfrissebb esküvői fotósorozatainkba"
+    }
+  },
+  "contact": {
+    "title": "Kapcsolat",
+    "subtitle": "Alkossunk együtt valami gyönyörűt. Keressen minket bármely csatornán keresztül, vagy töltse ki az űrlapot.",
+    "form": {
+      "title": "Vedd fel velünk a kapcsolatot",
+      "firstName": "Keresztnév",
+      "lastName": "Vezetéknév",
+      "email": "Email",
+      "phone": "Telefon",
+      "message": "Üzenet",
+      "submit": "Üzenet küldése"
+    },
+    "info": {
+      "phone": {
+        "title": "Telefon",
+        "details": "+1 (555) 123-4567",
+        "description": "Hétfőtől péntekig, 9:00-18:00"
+      },
+      "email": {
+        "title": "Email",
+        "details": "info@sonderphotography.com",
+        "description": "24 órán belül válaszolunk"
+      },
+      "location": {
+        "title": "Stúdió címe",
+        "details": "123 Creative Studio St.",
+        "description": "New York, NY 10001"
+      }
+    },
+    "cta": {
+      "title": "Készen áll valami gyönyörű megalkotására?",
+      "subtitle": "Beszéljük meg az esküvői elképzeléseit és hogy miben segíthetünk megvalósítani azokat.",
+      "button": "Kapcsolatfelvétel"
+    }
+  },
+  "portfolio": {
+    "title": "Portfóliónk",
+    "subtitle": "Szeretettel és művészi látásmóddal megörökített pillanatok",
+    "images": {
+      "ceremony": "Esküvői szertartás",
+      "bride": "Menyasszonyi portré",
+      "details": "Esküvői részletek",
+      "couple": "Páros fotók",
+      "reception": "Esküvői fogadás",
+      "dance": "Első tánc"
+    }
+  },
+  "services": {
+    "title": "Szolgáltatásaink",
+    "subtitle": "Átfogó esküvői megoldások a tökéletes naphoz",
+    "items": {
+      "photography": {
+        "title": "Esküvői fotózás",
+        "description": "Művészi látásmóddal és odafigyeléssel örökítjük meg a különleges pillanatokat. Fotózási csomagjaink tartalmazzák a jegyesfotózást, egész napos esküvői fotózást és gondosan válogatott digitális galériákat."
+      },
+      "videography": {
+        "title": "Esküvői videózás",
+        "description": "Professzionális filmkészítés, amely elmeséli szerelmük történetét. A készülődéstől az utolsó táncig gyönyörű filmeket készítünk, amelyeket örökre megőrizhetnek."
+      },
+      "websites": {
+        "title": "Esküvői weboldalak",
+        "description": "Egyedi tervezésű esküvői weboldalak, amelyek tájékoztatják és lelkesítik a vendégeket. Ossza meg szerelmük történetét, az esemény részleteit, és kezelje a visszajelzéseket egy helyen."
+      },
+      "invitations": {
+        "title": "Esküvői meghívók",
+        "description": "Elegáns és személyre szabott esküvői meghívók, amelyek megadják a nagy nap alaphangulatát. A save-the-date kártyáktól a köszönőkártyákig egységes papíráru kollekciót készítünk."
+      }
+    }
+  },
+  "about": {
+    "title": "Rólunk",
+    "subtitle": "A legjobb esküvői fotózásért és videózásért mi felelünk"
+  },
+  "auth": {
+    "login": {
+      "title": "Bejelentkezés",
+      "logout": "Kijelentkezés"
+    }
+  }
+}
