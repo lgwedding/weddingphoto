@@ -74,18 +74,25 @@ export default function Header() {
             background: scrolled
               ? "rgba(255, 255, 255, 0.95)"
               : "rgba(255, 255, 255, 0.8)",
-            backdropFilter: "blur(10px)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)", // iOS support
             boxShadow: scrolled ? "0 2px 28px rgba(0,0,0,0.08)" : "none",
             borderBottom: scrolled ? "none" : "1px solid rgba(255,255,255,0.2)",
-            transition: "all 0.3s ease",
+            transform: "translate3d(0,0,0)", // Force GPU acceleration
+            WebkitTransform: "translate3d(0,0,0)", // iOS GPU acceleration
+            transition: "background-color 0.2s ease-out",
+            WebkitTransition: "background-color 0.2s ease-out", // iOS transition
           }}
         >
           <Container maxWidth="xl">
             <Toolbar
               sx={{
                 justifyContent: "space-between",
-                py: scrolled ? 1 : 1.5,
-                transition: "all 0.3s ease",
+                height: scrolled ? "64px" : "80px",
+                transform: "translate3d(0,0,0)", // Force GPU acceleration
+                WebkitTransform: "translate3d(0,0,0)", // iOS GPU acceleration
+                transition: "height 0.2s ease-out",
+                WebkitTransition: "height 0.2s ease-out", // iOS transition
               }}
             >
               <IntlLink
