@@ -1,19 +1,12 @@
-"use client";
-
-import {
-  Box,
-  Container,
-  Typography,
-  Grid,
-  Divider,
-  Button,
-} from "@mui/material";
+import { Box, Container, Typography, Grid, Button } from "@mui/material";
 import Image from "next/image";
 import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
 import { FaCamera, FaVideo, FaGlobe, FaEnvelope } from "react-icons/fa";
 import HeroSection from "@/app/_components/hero/HeroSection";
 import { useTranslations } from "next-intl";
+import { Metadata } from "next";
+
 const services = [
   {
     title: "Wedding Photography",
@@ -161,4 +154,36 @@ export default function Services() {
       <Footer />
     </Box>
   );
+}
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  return {
+    title: "Wedding Photography Services | SONDER Photography",
+    description:
+      "Comprehensive wedding photography services including engagement sessions, full-day coverage, videography, and custom wedding websites.",
+    alternates: {
+      canonical: `https://yourdomain.com/${locale}/services`,
+      languages: {
+        en: "/en/services",
+        hu: "/hu/services",
+      },
+    },
+    openGraph: {
+      title: "Wedding Photography Services - SONDER Photography",
+      description:
+        "Professional wedding photography and videography services in Hungary",
+      images: [
+        {
+          url: "https://images.unsplash.com/photo-1606216794074-735e91aa2c92",
+          width: 1200,
+          height: 630,
+          alt: "Wedding Photography Services",
+        },
+      ],
+    },
+  };
 }

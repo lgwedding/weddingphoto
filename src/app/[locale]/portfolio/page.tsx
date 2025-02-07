@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Container, Typography, Grid } from "@mui/material";
 import Image from "next/image";
 import Header from "@/app/_components/header/Header";
@@ -7,6 +5,7 @@ import Footer from "@/app/_components/footer/Footer";
 import Masonry from "@mui/lab/Masonry";
 import HeroSection from "@/app/_components/hero/HeroSection";
 import { useTranslations } from "next-intl";
+import { Metadata } from "next";
 
 const portfolioImages = [
   {
@@ -105,4 +104,23 @@ export default function Portfolio() {
       <Footer />
     </Box>
   );
+}
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  return {
+    title: `Portfolio | SONDER Photography`,
+    description:
+      "Browse our collection of wedding photography showcasing timeless moments and artistic vision",
+    alternates: {
+      canonical: `https://yourdomain.com/${locale}/portfolio`,
+      languages: {
+        en: "/en/portfolio",
+        hu: "/hu/portfolio",
+      },
+    },
+  };
 }

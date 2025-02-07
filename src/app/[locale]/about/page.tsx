@@ -1,11 +1,11 @@
-"use client";
-
 import { Box, Container, Typography, Grid } from "@mui/material";
 import Image from "next/image";
 import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
 import HeroSection from "@/app/_components/hero/HeroSection";
 import { useTranslations } from "next-intl";
+import { Metadata } from "next";
+
 const teamMembers = [
   {
     name: "Sarah Johnson",
@@ -149,4 +149,36 @@ export default function About() {
       <Footer />
     </Box>
   );
+}
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  return {
+    title: "About Us | SONDER Photography",
+    description:
+      "Professional wedding photography team in Hungary. Learn about our passion for capturing timeless moments and our artistic approach.",
+    alternates: {
+      canonical: `https://yourdomain.com/${locale}/about`,
+      languages: {
+        en: "/en/about",
+        hu: "/hu/about",
+      },
+    },
+    openGraph: {
+      title: "About SONDER Photography",
+      description:
+        "Meet our team of professional wedding photographers in Hungary",
+      images: [
+        {
+          url: "https://images.unsplash.com/photo-1604017011826-d3b4c23f8914",
+          width: 1200,
+          height: 630,
+          alt: "SONDER Photography Team",
+        },
+      ],
+    },
+  };
 }

@@ -9,6 +9,31 @@ import { useTranslations } from "next-intl";
 
 export default function Home() {
   const t = useTranslations("home");
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "PhotographyBusiness",
+    name: "SONDER Photography",
+    image: "https://yourdomain.com/logo.jpg",
+    "@id": "https://yourdomain.com",
+    url: "https://yourdomain.com",
+    telephone: "+1-555-123-4567",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "123 Creative Studio St.",
+      addressLocality: "New York",
+      postalCode: "10001",
+      addressCountry: "US",
+    },
+    priceRange: "€€€",
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "09:00",
+      closes: "18:00",
+    },
+  };
+
   return (
     <Box>
       <Header />
@@ -82,6 +107,11 @@ export default function Home() {
       </Box>
 
       <Footer />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Box>
   );
 }
