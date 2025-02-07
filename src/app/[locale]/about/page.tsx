@@ -1,11 +1,11 @@
-"use client";
-
 import { Box, Container, Typography, Grid } from "@mui/material";
 import Image from "next/image";
 import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
 import HeroSection from "@/app/_components/hero/HeroSection";
 import { useTranslations } from "next-intl";
+import { Metadata } from "next";
+
 const teamMembers = [
   {
     name: "Sarah Johnson",
@@ -32,6 +32,31 @@ const teamMembers = [
 
 export default function About() {
   const t = useTranslations("about");
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    mainEntity: {
+      "@type": "Organization",
+      name: "SONDER Photography",
+      description: "Professional wedding photography team in Hungary",
+      image: "https://images.unsplash.com/photo-1604017011826-d3b4c23f8914",
+      employee: teamMembers.map((member) => ({
+        "@type": "Person",
+        name: member.name,
+        jobTitle: member.role,
+        image: member.image,
+        description: member.description,
+      })),
+      foundingDate: "2015",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Budapest",
+        addressCountry: "Hungary",
+      },
+    },
+  };
+
   return (
     <Box>
       <Header />
@@ -147,6 +172,42 @@ export default function About() {
       </Box>
 
       <Footer />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Box>
   );
+}
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  return {
+    title: "About Us | SONDER Photography",
+    description:
+      "Professional wedding photography team in Hungary. Learn about our passion for capturing timeless moments and our artistic approach.",
+    alternates: {
+      canonical: `https://yourdomain.com/${locale}/about`,
+      languages: {
+        en: "/en/about",
+        hu: "/hu/about",
+      },
+    },
+    openGraph: {
+      title: "About SONDER Photography",
+      description:
+        "Meet our team of professional wedding photographers in Hungary",
+      images: [
+        {
+          url: "https://images.unsplash.com/photo-1604017011826-d3b4c23f8914",
+          width: 1200,
+          height: 630,
+          alt: "SONDER Photography Team",
+        },
+      ],
+    },
+  };
 }
