@@ -5,7 +5,6 @@ import Footer from "@/app/_components/footer/Footer";
 import Masonry from "@mui/lab/Masonry";
 import HeroSection from "@/app/_components/hero/HeroSection";
 import { useTranslations } from "next-intl";
-import { Metadata } from "next";
 
 const portfolioImages = [
   {
@@ -136,13 +135,10 @@ export default function Portfolio() {
     </Box>
   );
 }
-
-export async function generateMetadata({
-  params: { locale },
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
-  return Promise.resolve({
+type Params = Promise<{ locale: "en" | "hu" }>;
+export async function generateMetadata({ params }: { params: Params }) {
+  const locale = await params;
+  return {
     title: `Portfolio | SONDER Photography`,
     description:
       "Browse our collection of wedding photography showcasing timeless moments and artistic vision",
@@ -158,5 +154,5 @@ export async function generateMetadata({
       description:
         "Browse our collection of wedding photography showcasing timeless moments and artistic vision",
     },
-  });
+  };
 }

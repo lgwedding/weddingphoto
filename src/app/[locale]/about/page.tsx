@@ -4,7 +4,6 @@ import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
 import HeroSection from "@/app/_components/hero/HeroSection";
 import { useTranslations } from "next-intl";
-import { Metadata } from "next";
 
 const teamMembers = [
   {
@@ -175,13 +174,10 @@ export default function About() {
     </Box>
   );
 }
-
-export async function generateMetadata({
-  params: { locale },
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
-  return Promise.resolve({
+type Params = Promise<{ locale: "en" | "hu" }>;
+export async function generateMetadata({ params }: { params: Params }) {
+  const locale = await params;
+  return {
     title: "About Us | SONDER Photography",
     description:
       "Professional wedding photography team in Hungary. Learn about our passion for capturing timeless moments and our artistic approach.",
@@ -205,5 +201,5 @@ export async function generateMetadata({
         },
       ],
     },
-  });
+  };
 }
