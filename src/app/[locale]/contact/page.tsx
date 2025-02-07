@@ -295,7 +295,7 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
-  return {
+  return Promise.resolve({
     title: "Contact Us | SONDER Photography",
     description:
       "Get in touch with SONDER Photography for your wedding photography needs. Based in Hungary, available for destination weddings.",
@@ -318,5 +318,5 @@ export async function generateMetadata({
         },
       ],
     },
-  };
+  });
 }

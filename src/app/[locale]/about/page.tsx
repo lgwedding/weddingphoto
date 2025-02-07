@@ -80,17 +80,13 @@ export default function About() {
               variant="body1"
               sx={{ mb: 3, color: "#666", fontSize: "1.1rem" }}
             >
-              At Sonder Photography, we believe every moment tells a story.
-              Founded in 2015, we've dedicated ourselves to capturing the
-              authentic, unscripted moments that make each wedding unique.
+              {t("description")}
             </Typography>
             <Typography
               variant="body1"
               sx={{ color: "#666", fontSize: "1.1rem" }}
             >
-              Our approach combines artistic vision with technical excellence,
-              ensuring that every photograph not only captures the moment but
-              also the emotion behind it.
+              {t("description2")}
             </Typography>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -185,7 +181,7 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
-  return {
+  return Promise.resolve({
     title: "About Us | SONDER Photography",
     description:
       "Professional wedding photography team in Hungary. Learn about our passion for capturing timeless moments and our artistic approach.",
@@ -209,5 +205,5 @@ export async function generateMetadata({
         },
       ],
     },
-  };
+  });
 }

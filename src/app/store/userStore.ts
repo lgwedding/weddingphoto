@@ -1,19 +1,30 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
-const useUserStore = (set: any) => ({
-  currentUser: { id: 0 },
-  setCurrent: (user: any) => {
-    set(() => ({
-      currentUser: user,
-    }));
-  },
-});
+interface User {
+  id: number;
+  email?: string;
+  name?: string;
+  role?: string;
+}
 
-export default create(
+interface UserState {
+  currentUser: User;
+  setCurrent: (user: User) => void;
+}
+
+const useUserStore = create<UserState>()(
   devtools(
-    persist(useUserStore, {
-      name: "user",
-    })
+    persist(
+      (set) => ({
+        currentUser: { id: 0 },
+        setCurrent: (user) => set({ currentUser: user }),
+      }),
+      {
+        name: "user-storage",
+      }
+    )
   )
 );
+
+export default useUserStore;

@@ -60,8 +60,7 @@ export default function Footer() {
                 maxWidth: "90%",
               }}
             >
-              Capturing life's precious moments with artistic vision and
-              timeless elegance.
+              {t("common.brand.description")}
             </Typography>
             <Box sx={{ display: "flex", gap: 1 }}>
               {socialLinks.map((social) => (

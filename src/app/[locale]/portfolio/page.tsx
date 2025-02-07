@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Grid } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import Image from "next/image";
 import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
@@ -142,7 +142,7 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
-  return {
+  return Promise.resolve({
     title: `Portfolio | SONDER Photography`,
     description:
       "Browse our collection of wedding photography showcasing timeless moments and artistic vision",
@@ -153,5 +153,10 @@ export async function generateMetadata({
         hu: "/hu/portfolio",
       },
     },
-  };
+    openGraph: {
+      title: `Portfolio | SONDER Photography`,
+      description:
+        "Browse our collection of wedding photography showcasing timeless moments and artistic vision",
+    },
+  });
 }

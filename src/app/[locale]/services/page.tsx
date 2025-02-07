@@ -146,14 +146,13 @@ export default function Services() {
       <Box sx={{ bgcolor: "#1a1a1a", color: "white", py: 16 }}>
         <Container maxWidth="md" sx={{ textAlign: "center" }}>
           <Typography variant="h3" sx={{ mb: 3, fontWeight: 600 }}>
-            Ready to Create Something Beautiful?
+            {t("contact.title")}
           </Typography>
           <Typography
             variant="body1"
             sx={{ mb: 4, opacity: 0.9, fontSize: "1.1rem" }}
           >
-            Let's discuss your wedding vision and how we can help bring it to
-            life.
+            {t("contact.subtitle")}
           </Typography>
           <Button
             variant="contained"
@@ -171,7 +170,7 @@ export default function Services() {
               transition: "all 0.3s ease",
             }}
           >
-            Contact Us
+            {t("contact.button")}
           </Button>
         </Container>
       </Box>
@@ -190,10 +189,11 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
-  return {
+  return Promise.resolve({
     title: "Wedding Photography Services | SONDER Photography",
     description:
       "Comprehensive wedding photography services including engagement sessions, full-day coverage, videography, and custom wedding websites.",
+
     alternates: {
       canonical: `https://yourdomain.com/${locale}/services`,
       languages: {
@@ -214,5 +214,5 @@ export async function generateMetadata({
         },
       ],
     },
-  };
+  });
 }
