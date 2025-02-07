@@ -35,6 +35,32 @@ export default function Contact() {
       description: t("info.location.description"),
     },
   ];
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: "Contact SONDER Photography",
+    mainEntity: {
+      "@type": "PhotographyBusiness",
+      name: "SONDER Photography",
+      telephone: "+1-555-123-4567",
+      email: "info@sonderphotography.com",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "123 Creative Studio St.",
+        addressLocality: "New York",
+        postalCode: "10001",
+        addressCountry: "US",
+      },
+      openingHoursSpecification: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "18:00",
+      },
+    },
+  };
+
   return (
     <Box>
       <Header />
@@ -256,6 +282,10 @@ export default function Contact() {
         </Container>
       </Box>
       <Footer />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Box>
   );
 }

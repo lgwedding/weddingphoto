@@ -42,6 +42,33 @@ const portfolioImages = [
 
 export default function Portfolio() {
   const t = useTranslations("portfolio");
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Wedding Photography Portfolio",
+    description:
+      "Browse our collection of wedding photography showcasing timeless moments and artistic vision",
+    image: portfolioImages.map((image) => ({
+      "@type": "ImageObject",
+      contentUrl: image.src,
+      description: image.alt,
+      creator: {
+        "@type": "Organization",
+        name: "SONDER Photography",
+      },
+    })),
+    provider: {
+      "@type": "PhotographyBusiness",
+      name: "SONDER Photography",
+      image: "https://yourdomain.com/logo.jpg",
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "Hungary",
+      },
+    },
+  };
+
   return (
     <Box>
       <Header />
@@ -102,6 +129,10 @@ export default function Portfolio() {
       </Container>
 
       <Footer />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Box>
   );
 }

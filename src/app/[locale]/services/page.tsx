@@ -40,6 +40,31 @@ const services = [
 
 export default function Services() {
   const t = useTranslations("services");
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: services.map((service, index) => ({
+      "@type": "Service",
+      position: index + 1,
+      name: service.title,
+      description: service.description,
+      provider: {
+        "@type": "PhotographyBusiness",
+        name: "SONDER Photography",
+      },
+      image: service.image,
+      offers: {
+        "@type": "Offer",
+        availability: "https://schema.org/InStock",
+        priceSpecification: {
+          "@type": "PriceSpecification",
+          priceCurrency: "EUR",
+        },
+      },
+    })),
+  };
+
   return (
     <Box>
       <Header />
@@ -152,6 +177,10 @@ export default function Services() {
       </Box>
 
       <Footer />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Box>
   );
 }

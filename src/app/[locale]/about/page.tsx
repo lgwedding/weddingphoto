@@ -32,6 +32,31 @@ const teamMembers = [
 
 export default function About() {
   const t = useTranslations("about");
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    mainEntity: {
+      "@type": "Organization",
+      name: "SONDER Photography",
+      description: "Professional wedding photography team in Hungary",
+      image: "https://images.unsplash.com/photo-1604017011826-d3b4c23f8914",
+      employee: teamMembers.map((member) => ({
+        "@type": "Person",
+        name: member.name,
+        jobTitle: member.role,
+        image: member.image,
+        description: member.description,
+      })),
+      foundingDate: "2015",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Budapest",
+        addressCountry: "Hungary",
+      },
+    },
+  };
+
   return (
     <Box>
       <Header />
@@ -147,6 +172,10 @@ export default function About() {
       </Box>
 
       <Footer />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Box>
   );
 }
