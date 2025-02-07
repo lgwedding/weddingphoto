@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Container, Typography } from "@mui/material";
 import Image from "next/image";
 import Header from "@/app/_components/header/Header";
@@ -7,6 +5,7 @@ import Footer from "@/app/_components/footer/Footer";
 import Masonry from "@mui/lab/Masonry";
 import HeroSection from "@/app/_components/hero/HeroSection";
 import { useTranslations } from "next-intl";
+import { Metadata } from "next";
 
 const portfolioImages = [
   {
@@ -43,6 +42,33 @@ const portfolioImages = [
 
 export default function Portfolio() {
   const t = useTranslations("portfolio");
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Wedding Photography Portfolio",
+    description:
+      "Browse our collection of wedding photography showcasing timeless moments and artistic vision",
+    image: portfolioImages.map((image) => ({
+      "@type": "ImageObject",
+      contentUrl: image.src,
+      description: image.alt,
+      creator: {
+        "@type": "Organization",
+        name: "SONDER Photography",
+      },
+    })),
+    provider: {
+      "@type": "PhotographyBusiness",
+      name: "SONDER Photography",
+      image: "https://yourdomain.com/logo.jpg",
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "Hungary",
+      },
+    },
+  };
+
   return (
     <Box>
       <Header />
@@ -103,6 +129,34 @@ export default function Portfolio() {
       </Container>
 
       <Footer />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Box>
   );
+}
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  return Promise.resolve({
+    title: `Portfolio | SONDER Photography`,
+    description:
+      "Browse our collection of wedding photography showcasing timeless moments and artistic vision",
+    alternates: {
+      canonical: `https://yourdomain.com/${locale}/portfolio`,
+      languages: {
+        en: "/en/portfolio",
+        hu: "/hu/portfolio",
+      },
+    },
+    openGraph: {
+      title: `Portfolio | SONDER Photography`,
+      description:
+        "Browse our collection of wedding photography showcasing timeless moments and artistic vision",
+    },
+  });
 }

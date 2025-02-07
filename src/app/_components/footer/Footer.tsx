@@ -27,10 +27,17 @@ export default function Footer() {
   ];
 
   return (
-    <Box sx={{ bgcolor: "#ffffff", pt: 12, pb: 6 }}>
+    <footer
+      style={{
+        backgroundColor: "#ffffff",
+        paddingTop: "12px",
+        paddingBottom: "6px",
+      }}
+    >
       <Container maxWidth="lg">
         <Grid container spacing={8} mb={8}>
           {/* Brand Section */}
+
           <Grid item xs={12} md={4}>
             <Typography
               variant="h5"
@@ -164,6 +171,6 @@ export default function Footer() {
           © {new Date().getFullYear()} SONDER. All rights reserved.
         </Typography>
       </Container>
-    </Box>
+    </footer>
   );
 }

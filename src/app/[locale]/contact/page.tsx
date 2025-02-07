@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Box,
   Container,
@@ -13,6 +11,7 @@ import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { useTranslations } from "next-intl";
+import { Metadata } from "next";
 
 export default function Contact() {
   const t = useTranslations("contact");
@@ -36,6 +35,32 @@ export default function Contact() {
       description: t("info.location.description"),
     },
   ];
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: "Contact SONDER Photography",
+    mainEntity: {
+      "@type": "PhotographyBusiness",
+      name: "SONDER Photography",
+      telephone: "+1-555-123-4567",
+      email: "info@sonderphotography.com",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "123 Creative Studio St.",
+        addressLocality: "New York",
+        postalCode: "10001",
+        addressCountry: "US",
+      },
+      openingHoursSpecification: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "18:00",
+      },
+    },
+  };
+
   return (
     <Box>
       <Header />
@@ -257,6 +282,41 @@ export default function Contact() {
         </Container>
       </Box>
       <Footer />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Box>
   );
+}
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
+  return Promise.resolve({
+    title: "Contact Us | SONDER Photography",
+    description:
+      "Get in touch with SONDER Photography for your wedding photography needs. Based in Hungary, available for destination weddings.",
+    alternates: {
+      canonical: `https://yourdomain.com/${locale}/contact`,
+      languages: {
+        en: "/en/contact",
+        hu: "/hu/contact",
+      },
+    },
+    openGraph: {
+      title: "Contact SONDER Photography",
+      description: "Book your wedding photography consultation today",
+      images: [
+        {
+          url: "/contact-og-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Contact SONDER Photography",
+        },
+      ],
+    },
+  });
 }
