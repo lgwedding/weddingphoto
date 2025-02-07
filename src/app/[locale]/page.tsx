@@ -1,10 +1,8 @@
-"use client";
-
-import { Box, Container, Typography, Button, Grid } from "@mui/material";
+import { Box, Container, Typography, Grid } from "@mui/material";
 import Image from "next/image";
 import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
-import HeroSection from "../_components/hero/HeroSection";
+import HeroSection from "@/app/_components/hero/HeroSection";
 import { useTranslations } from "next-intl";
 
 export default function Home() {

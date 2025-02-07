@@ -165,7 +165,11 @@ export default function Header() {
                     .map((lang) => (
                       <IntlLink
                         key={lang.code}
-                        href={pathname.replace(`/${currentLocale}`, "")}
+                        href={
+                          pathname === `/${currentLocale}`
+                            ? "/"
+                            : pathname.replace(`/${currentLocale}`, "")
+                        }
                         locale={lang.code as "en" | "hu"}
                         style={{ textDecoration: "none" }}
                       >
