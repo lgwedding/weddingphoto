@@ -4,7 +4,9 @@
       "portfolio": "Portfolio",
       "services": "Services",
       "about": "About",
-      "contact": "Contact"
+      "contact": "Contact",
+      "login": "Login",
+      "logout": "Logout"
     },
     "brand": {
       "name": "SONDER",
@@ -80,7 +82,6 @@
     "items": {
       "photography": {
         "title": "Wedding Photography",
-
         "description": "Capturing your special moments with artistic vision and attention to detail. Our photography packages include engagement sessions, full-day wedding coverage, and carefully curated digital galleries."
       },
       "videography": {
@@ -103,12 +104,15 @@
     "description": "At Sonder Photography, we believe every moment tells a story. Founded in 2015, we've dedicated ourselves to capturing the authentic, unscripted moments that make each wedding unique.",
     "description2": "Our approach combines artistic vision with technical excellence, ensuring that every photograph not only captures the moment but also the emotion behind it."
   },
-
   "auth": {
     "login": {
       "title": "Sign In",
-
-      "logout": "Logout"
+      "error": "Invalid credentials",
+      "success": "Successfully logged in"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "welcome": "Welcome back"
     }
   }
 }

@@ -19,13 +19,24 @@ import { Link as IntlLink } from "@/navigation";
 import { useTranslations } from "next-intl";
 import { usePathname, useParams } from "next/navigation";
 import { GB, HU } from "country-flag-icons/react/3x2";
+import { firebaseAuthService } from "@/app/_services/firebase-auth-service";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const t = useTranslations("common.menu");
   const pathname = usePathname();
   const { locale: currentLocale } = useParams();
+  const { getCurrentUser, logout } = firebaseAuthService();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const user = await getCurrentUser();
+      setIsAuthenticated(!!user);
+    };
+    checkAuth();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,14 +46,25 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const menuItems = [
+  const handleLogout = async () => {
+    await logout();
+    setIsAuthenticated(false);
+  };
+  //TODO add correct type
+  const baseMenuItems: any[] = [
     { label: t("portfolio"), href: "/portfolio" },
     { label: t("services"), href: "/services" },
     { label: t("about"), href: "/about" },
     { label: t("contact"), href: "/contact" },
-  ].map((item) => ({
+  ];
+
+  const authButton = isAuthenticated
+    ? { label: t("logout"), onClick: handleLogout, isAuthButton: true }
+    : { label: t("login"), href: "/login", isAuthButton: true };
+
+  const menuItems = [...baseMenuItems, authButton].map((item) => ({
     ...item,
-    href: `/${currentLocale}${item.href}`,
+    href: item.href ? `/${currentLocale}${item.href}` : undefined,
   }));
 
   const languages = [
@@ -127,6 +149,7 @@ export default function Header() {
                   <Button
                     key={item.label}
                     href={item.href}
+                    onClick={item.onClick}
                     sx={{
                       color: "#1a1a1a",
                       px: 2,
@@ -157,6 +180,17 @@ export default function Header() {
                         ml: 2,
                         "&:hover": {
                           bgcolor: "#333",
+                          transform: "translateY(-2px)",
+                        },
+                      }),
+                      ...(item.isAuthButton && {
+                        bgcolor: isAuthenticated ? "#dc3545" : "transparent",
+                        color: isAuthenticated ? "white" : "#1a1a1a",
+                        border: isAuthenticated ? "none" : "2px solid #1a1a1a",
+                        ml: 2,
+                        "&:hover": {
+                          bgcolor: isAuthenticated ? "#c82333" : "#1a1a1a",
+                          color: "white",
                           transform: "translateY(-2px)",
                         },
                       }),
@@ -256,7 +290,7 @@ export default function Header() {
                         <Button
                           fullWidth
                           href={item.href}
-                          onClick={handleDrawerToggle}
+                          onClick={item.onClick}
                           sx={{
                             color: "#1a1a1a",
                             justifyContent: "flex-start",

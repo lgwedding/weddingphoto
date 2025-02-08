@@ -1,53 +1,71 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../_config/firebase-config";
+import { useRouter } from "next/navigation";
 
 export const firebaseAuthService = () => {
   const app = initializeApp(firebaseConfig);
   const authService = getAuth(app);
+  const router = useRouter();
 
-  //   const { setCurrent, currentUser } = useUserStore((state: any) => ({
-  //     setCurrent: state.setCurrent,
-  //     currentUser: state.currentUser,
-  //   }));
+  const login = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        authService,
+        email,
+        password
+      );
+      const user = userCredential.user;
 
-  const login = ({ email, password }: { email: string; password: string }) => {
-    signInWithEmailAndPassword(authService, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        // setCurrent(user);
-        console.log(user);
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
-  };
+      document.cookie = `auth_token=${await user.getIdToken()};path=/`;
 
-  const logut = () => {
-    authService.signOut();
-    console.log("logout");
-    // setCurrent({});
-  };
-
-  const isLoggedin = (): boolean => {
-    let loggedIn = false;
-    if (authService.currentUser) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-
-      loggedIn = true;
-      // ...
-    } else {
-      // User is signed out
-      // ...
-      loggedIn = false;
+      router.push(`/dashboard`);
+      return { success: true, user };
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error.message,
+      };
     }
-    return loggedIn;
   };
 
-  return { login, logut, isLoggedin };
+  const logout = async () => {
+    try {
+      await authService.signOut();
+      document.cookie =
+        "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      router.push(`/login`);
+      return { success: true };
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
+  };
+
+  const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+      const unsubscribe = onAuthStateChanged(
+        authService,
+        (user) => {
+          unsubscribe();
+          resolve(user);
+        },
+        reject
+      );
+    });
+  };
+
+  return { login, logout, getCurrentUser };
 };

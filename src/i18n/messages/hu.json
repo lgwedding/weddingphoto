@@ -4,7 +4,9 @@
       "portfolio": "Portfólió",
       "services": "Szolgáltatások",
       "about": "Rólunk",
-      "contact": "Kapcsolat"
+      "contact": "Kapcsolat",
+      "login": "Bejelentkezés",
+      "logout": "Kijelentkezés"
     },
     "brand": {
       "name": "SONDER",
@@ -107,7 +109,12 @@
   "auth": {
     "login": {
       "title": "Bejelentkezés",
-      "logout": "Kijelentkezés"
+      "error": "Hibás hitelesítő adatok",
+      "success": "Sikeres bejelentkezés"
+    },
+    "dashboard": {
+      "title": "Irányítópult",
+      "welcome": "Üdvözlünk"
     }
   }
 }
