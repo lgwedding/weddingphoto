@@ -44,7 +44,7 @@ export const firebaseAuthService = () => {
       await authService.signOut();
       document.cookie =
         "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-      router.push(`/login`);
+      router.push(`/`);
       return { success: true };
     } catch (error: any) {
       return {
