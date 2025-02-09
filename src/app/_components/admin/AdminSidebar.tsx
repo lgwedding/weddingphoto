@@ -17,6 +17,7 @@ import { usePathname } from "next/navigation";
 import { Link as IntlLink } from "@/navigation";
 
 const DRAWER_WIDTH = 240;
+const HEADER_HEIGHT = 80; // Height of the header when not scrolled
 
 const menuItems = [
   { label: "Dashboard", icon: MdDashboard, path: "/dashboard" },
@@ -34,11 +35,15 @@ export default function AdminSidebar() {
       sx={{
         width: DRAWER_WIDTH,
         flexShrink: 0,
+        marginTop: `${HEADER_HEIGHT}px`,
+        height: `calc(100vh - ${HEADER_HEIGHT}px)`,
         "& .MuiDrawer-paper": {
           width: DRAWER_WIDTH,
           boxSizing: "border-box",
           borderRight: "1px solid rgba(0,0,0,0.08)",
           bgcolor: "white",
+          marginTop: `${HEADER_HEIGHT}px`,
+          height: `calc(100vh - ${HEADER_HEIGHT}px)`,
         },
       }}
     >
