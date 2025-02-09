@@ -23,6 +23,7 @@ import { GB, HU } from "country-flag-icons/react/3x2";
 import { firebaseAuthService } from "@/app/_services/firebase-auth-service";
 import UserWidget from "./UserWidget";
 import { adminMenuItems } from "../admin/AdminSidebar";
+import { MdLogin, MdLogout } from "react-icons/md";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -61,14 +62,17 @@ export default function Header() {
     { label: t("contact"), href: "/contact" },
   ];
 
-  const authButton = isAuthenticated
-    ? { label: t("logout"), onClick: handleLogout, isAuthButton: true }
-    : { label: t("login"), href: "/login", isAuthButton: true };
-
-  const menuItems = [...baseMenuItems, authButton].map((item) => ({
-    ...item,
-    href: item.href ? `/${currentLocale}${item.href}` : undefined,
-  }));
+  const menuItems = isAuthenticated
+    ? baseMenuItems
+    : [
+        ...baseMenuItems,
+        {
+          label: t("login"),
+          href: "/login",
+          isAuthButton: true,
+          icon: <MdLogin />,
+        },
+      ];
 
   const languages = [
     { code: "en", label: "English" },
@@ -296,38 +300,34 @@ export default function Header() {
                     sx={{ display: "flex", flexDirection: "column", gap: 2 }}
                   >
                     {menuItems.map((item) => (
-                      <ListItem key={item.label} disablePadding>
-                        <Button
-                          fullWidth
-                          href={item.href}
-                          onClick={(e) => {
-                            if (item.onClick) {
-                              item.onClick(e);
-                            }
-                            handleDrawerToggle();
-                          }}
-                          sx={{
-                            color: "#1a1a1a",
-                            justifyContent: "flex-start",
-                            py: 1.5,
-                            borderRadius: "12px",
-                            transition: "all 0.2s ease",
-                            "&:hover": {
-                              bgcolor: "rgba(0,0,0,0.05)",
-                              transform: "translateX(8px)",
-                            },
-                            ...(item.label === t("contact") && {
-                              bgcolor: "#1a1a1a",
-                              color: "white",
+                      <>
+                        {item?.icon && (
+                          <Box sx={{ my: 2 }}>
+                            <Divider />
+                          </Box>
+                        )}
+                        <ListItem key={item.label} disablePadding>
+                          <Button
+                            fullWidth
+                            href={item.href}
+                            onClick={handleDrawerToggle}
+                            sx={{
+                              color: "#1a1a1a",
+                              justifyContent: "flex-start",
+                              py: 1.5,
+                              borderRadius: "12px",
+                              transition: "all 0.2s ease",
                               "&:hover": {
-                                bgcolor: "#333",
+                                bgcolor: "rgba(0,0,0,0.05)",
+                                transform: "translateX(8px)",
                               },
-                            }),
-                          }}
-                        >
-                          {item.label}
-                        </Button>
-                      </ListItem>
+                            }}
+                            startIcon={item?.icon || null}
+                          >
+                            {item.label}
+                          </Button>
+                        </ListItem>
+                      </>
                     ))}
 
                     {isAuthenticated && (
@@ -353,12 +353,37 @@ export default function Header() {
                                   transform: "translateX(8px)",
                                 },
                               }}
-                              startIcon={<item.icon />}
                             >
                               {item.label}
                             </Button>
                           </ListItem>
                         ))}
+                        <Box sx={{ my: 2 }}>
+                          <Divider />
+                        </Box>
+                        <ListItem disablePadding>
+                          <Button
+                            fullWidth
+                            onClick={() => {
+                              handleLogout();
+                              handleDrawerToggle();
+                            }}
+                            sx={{
+                              color: "#dc3545",
+                              justifyContent: "flex-start",
+                              py: 1.5,
+                              borderRadius: "12px",
+                              transition: "all 0.2s ease",
+                              "&:hover": {
+                                bgcolor: "rgba(220, 53, 69, 0.1)",
+                                transform: "translateX(8px)",
+                              },
+                            }}
+                            startIcon={<MdLogout />}
+                          >
+                            {t("logout")}
+                          </Button>
+                        </ListItem>
                       </>
                     )}
                   </List>

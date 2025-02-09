@@ -70,7 +70,7 @@ export default function AdminSidebar() {
               py: 1.5,
               px: 2,
               mb: 1,
-              mx: 1,
+              mx: 0,
               borderRadius: 2,
               color: pathname === item.path ? "white" : "#666",
               bgcolor: pathname === item.path ? "#1a1a1a" : "transparent",

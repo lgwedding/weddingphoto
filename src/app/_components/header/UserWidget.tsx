@@ -6,10 +6,12 @@ import {
   Menu,
   MenuItem,
   Typography,
+  Divider,
 } from "@mui/material";
-import { MdDashboard, MdPerson } from "react-icons/md";
+import { MdDashboard, MdPerson, MdLogout } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { firebaseAuthService } from "@/app/_services/firebase-auth-service";
 
 interface UserWidgetProps {
   userEmail?: string;
@@ -19,6 +21,7 @@ export default function UserWidget({ userEmail }: UserWidgetProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const router = useRouter();
   const t = useTranslations("common.userMenu");
+  const { logout } = firebaseAuthService();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -30,6 +33,11 @@ export default function UserWidget({ userEmail }: UserWidgetProps) {
 
   const handleNavigate = (path: string) => {
     router.push(path);
+    handleClose();
+  };
+
+  const handleLogout = async () => {
+    await logout();
     handleClose();
   };
 
@@ -77,6 +85,11 @@ export default function UserWidget({ userEmail }: UserWidgetProps) {
         <MenuItem onClick={() => handleNavigate("/profile")}>
           <MdPerson style={{ marginRight: 8 }} />
           <Typography>Profile</Typography>
+        </MenuItem>
+        <Divider sx={{ my: 1 }} />
+        <MenuItem onClick={handleLogout} sx={{ color: "error.main" }}>
+          <MdLogout style={{ marginRight: 8 }} />
+          <Typography>Logout</Typography>
         </MenuItem>
       </Menu>
     </Box>
