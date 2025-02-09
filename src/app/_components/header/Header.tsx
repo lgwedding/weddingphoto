@@ -11,6 +11,7 @@ import {
   ListItem,
   Container,
   Fade,
+  Divider,
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -21,6 +22,7 @@ import { usePathname, useParams } from "next/navigation";
 import { GB, HU } from "country-flag-icons/react/3x2";
 import { firebaseAuthService } from "@/app/_services/firebase-auth-service";
 import UserWidget from "./UserWidget";
+import { adminMenuItems } from "../admin/AdminSidebar";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -258,6 +260,7 @@ export default function Header() {
                   display: { xs: "block", md: "none" },
                   "& .MuiDrawer-paper": {
                     width: "100%",
+                    zIndex: 200,
                     maxWidth: "300px",
                     bgcolor: "rgba(255, 255, 255, 0.98)",
                     backdropFilter: "blur(10px)",
@@ -297,7 +300,12 @@ export default function Header() {
                         <Button
                           fullWidth
                           href={item.href}
-                          onClick={item.onClick}
+                          onClick={(e) => {
+                            if (item.onClick) {
+                              item.onClick(e);
+                            }
+                            handleDrawerToggle();
+                          }}
                           sx={{
                             color: "#1a1a1a",
                             justifyContent: "flex-start",
@@ -321,6 +329,38 @@ export default function Header() {
                         </Button>
                       </ListItem>
                     ))}
+
+                    {isAuthenticated && (
+                      <>
+                        <Box sx={{ my: 2 }}>
+                          <Divider />
+                        </Box>
+                        {adminMenuItems.map((item) => (
+                          <ListItem key={item.label} disablePadding>
+                            <Button
+                              fullWidth
+                              component={IntlLink}
+                              href={item.path}
+                              onClick={handleDrawerToggle}
+                              sx={{
+                                color: "#1a1a1a",
+                                justifyContent: "flex-start",
+                                py: 1.5,
+                                borderRadius: "12px",
+                                transition: "all 0.2s ease",
+                                "&:hover": {
+                                  bgcolor: "rgba(0,0,0,0.05)",
+                                  transform: "translateX(8px)",
+                                },
+                              }}
+                              startIcon={<item.icon />}
+                            >
+                              {item.label}
+                            </Button>
+                          </ListItem>
+                        ))}
+                      </>
+                    )}
                   </List>
                 </Box>
               </Drawer>

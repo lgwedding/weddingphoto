@@ -8,20 +8,23 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Header />
-      <AdminSidebar />
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          mt: 8,
-          bgcolor: "#f5f5f5",
-          minHeight: "100vh",
-        }}
-      >
-        {children}
+      <Box sx={{ display: "flex", flex: 1 }}>
+        <AdminSidebar />
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            p: { xs: 2, md: 3 },
+            ml: { xs: 0 },
+            bgcolor: "#f5f5f5",
+            minHeight: "100vh",
+            width: "100%",
+          }}
+        >
+          {children}
+        </Box>
       </Box>
     </Box>
   );

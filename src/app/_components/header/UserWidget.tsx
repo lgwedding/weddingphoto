@@ -62,6 +62,13 @@ export default function UserWidget({ userEmail }: UserWidgetProps) {
             boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
           },
         }}
+        sx={{
+          "& .MuiMenu-paper": {
+            overflow: "visible",
+          },
+        }}
+        disableScrollLock={true}
+        keepMounted
       >
         <MenuItem onClick={() => handleNavigate("/dashboard")}>
           <MdDashboard style={{ marginRight: 8 }} />

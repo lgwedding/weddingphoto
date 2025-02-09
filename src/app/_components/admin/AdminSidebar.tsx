@@ -17,9 +17,9 @@ import { usePathname } from "next/navigation";
 import { Link as IntlLink } from "@/navigation";
 
 const DRAWER_WIDTH = 240;
-const HEADER_HEIGHT = 80; // Height of the header when not scrolled
+const HEADER_HEIGHT = 80;
 
-const menuItems = [
+export const adminMenuItems = [
   { label: "Dashboard", icon: MdDashboard, path: "/dashboard" },
   { label: "Gallery", icon: MdPhotoLibrary, path: "/dashboard/gallery" },
   { label: "Clients", icon: MdPeople, path: "/dashboard/clients" },
@@ -35,19 +35,19 @@ export default function AdminSidebar() {
       sx={{
         width: DRAWER_WIDTH,
         flexShrink: 0,
-        marginTop: `${HEADER_HEIGHT}px`,
-        height: `calc(100vh - ${HEADER_HEIGHT}px)`,
+        zIndex: 100,
+        height: "100%",
+        display: { xs: "none", md: "block" },
         "& .MuiDrawer-paper": {
           width: DRAWER_WIDTH,
           boxSizing: "border-box",
           borderRight: "1px solid rgba(0,0,0,0.08)",
           bgcolor: "white",
-          marginTop: `${HEADER_HEIGHT}px`,
-          height: `calc(100vh - ${HEADER_HEIGHT}px)`,
+          height: "100%",
         },
       }}
     >
-      <Box sx={{ p: 3 }}>
+      <Box sx={{ p: 3, marginTop: `${HEADER_HEIGHT}px` }}>
         <Typography
           variant="h6"
           sx={{
@@ -61,7 +61,7 @@ export default function AdminSidebar() {
         </Typography>
       </Box>
       <List>
-        {menuItems.map((item) => (
+        {adminMenuItems.map((item) => (
           <ListItem
             key={item.label}
             component={IntlLink}
