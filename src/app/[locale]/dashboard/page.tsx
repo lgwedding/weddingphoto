@@ -21,6 +21,7 @@ import {
   MdTrendingUp,
 } from "react-icons/md";
 import { ApexOptions } from "apexcharts";
+import AdminLayout from "@/app/_components/admin/AdminLayout";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -114,8 +115,7 @@ export default function Dashboard() {
   }
 
   return (
-    <Box sx={{ bgcolor: "#f5f5f5", minHeight: "100vh" }}>
-      <Header />
+    <AdminLayout>
       <Container maxWidth="lg" sx={{ mt: 12, mb: 8 }}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
@@ -186,6 +186,6 @@ export default function Dashboard() {
           </Grid>
         </Grid>
       </Container>
-    </Box>
+    </AdminLayout>
   );
 }

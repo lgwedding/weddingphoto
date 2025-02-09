@@ -20,6 +20,7 @@ import { useTranslations } from "next-intl";
 import { usePathname, useParams } from "next/navigation";
 import { GB, HU } from "country-flag-icons/react/3x2";
 import { firebaseAuthService } from "@/app/_services/firebase-auth-service";
+import UserWidget from "./UserWidget";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -199,6 +200,12 @@ export default function Header() {
                     {item.label}
                   </Button>
                 ))}
+
+                {isAuthenticated ? (
+                  <UserWidget
+                    userEmail={(getCurrentUser() as any)?.email || ""}
+                  />
+                ) : null}
 
                 <Box sx={{ ml: 2, display: "flex", gap: 1 }}>
                   {languages
