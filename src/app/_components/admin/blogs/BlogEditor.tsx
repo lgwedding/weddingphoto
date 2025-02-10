@@ -11,12 +11,14 @@ import {
   MenuItem,
   Typography,
   IconButton,
+  CircularProgress,
 } from "@mui/material";
 import { MdArrowBack, MdSave } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useRouter } from "next/navigation";
+import { Blog, blogService } from "@/app/_services/blog-service";
 
 interface BlogEditorProps {
   blogId?: string;
@@ -76,12 +78,18 @@ const MenuBar = ({ editor }: any) => {
 
 export default function BlogEditor({ blogId }: BlogEditorProps) {
   const router = useRouter();
-  const [title, setTitle] = useState("");
-  const [status, setStatus] = useState("draft");
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [blog, setBlog] = useState<Partial<Blog>>({
+    title: "",
+    slug: "",
+    status: "draft",
+    content: "",
+  });
 
   const editor = useEditor({
     extensions: [StarterKit],
-    content: "",
+    content: blog.content,
     editorProps: {
       attributes: {
         class:
@@ -90,10 +98,68 @@ export default function BlogEditor({ blogId }: BlogEditorProps) {
     },
   });
 
-  const handleSave = () => {
-    const content = editor?.getHTML();
-    console.log({ title, content, status });
+  useEffect(() => {
+    if (blogId && blogId !== "new") {
+      setLoading(true);
+      blogService
+        .getBlog(blogId)
+        .then((data) => {
+          if (data) {
+            setBlog(data);
+            editor?.commands.setContent(data.content || "");
+          }
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [blogId, editor]);
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const title = e.target.value;
+    setBlog((prev) => ({
+      ...prev,
+      title,
+      slug: blogService.generateSlug(title),
+    }));
   };
+
+  const handleSave = async () => {
+    if (!blog.title || !editor) {
+      console.log("Validation failed:", { blog, editor });
+      return;
+    }
+
+    const content = editor.getHTML();
+    const blogData = {
+      title: blog.title,
+      content: content,
+      slug: blog.slug || blogService.generateSlug(blog.title),
+      status: blog.status || "draft",
+    };
+
+    console.log("Attempting to save blog:", blogData);
+
+    setSaving(true);
+    try {
+      if (blogId && blogId !== "new") {
+        await blogService.updateBlog(blogId, blogData);
+      } else {
+        await blogService.createBlog(blogData);
+      }
+      router.push("/dashboard/blogs");
+    } catch (error) {
+      console.error("Error saving blog:", error);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -116,13 +182,16 @@ export default function BlogEditor({ blogId }: BlogEditorProps) {
             <MdArrowBack />
           </IconButton>
           <Typography variant="h5" sx={{ fontWeight: 600, color: "#1a1a1a" }}>
-            {blogId ? "Edit Blog Post" : "New Blog Post"}
+            {blogId && blogId !== "new" ? "Edit Blog Post" : "New Blog Post"}
           </Typography>
         </Box>
         <Button
           variant="contained"
-          startIcon={<MdSave />}
+          startIcon={
+            saving ? <CircularProgress size={20} color="inherit" /> : <MdSave />
+          }
           onClick={handleSave}
+          disabled={saving}
           sx={{
             bgcolor: "#1a1a1a",
             "&:hover": {
@@ -130,7 +199,7 @@ export default function BlogEditor({ blogId }: BlogEditorProps) {
             },
           }}
         >
-          Save
+          {saving ? "Saving..." : "Save"}
         </Button>
       </Box>
 
@@ -143,19 +212,33 @@ export default function BlogEditor({ blogId }: BlogEditorProps) {
           mb: 3,
         }}
       >
-        <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
+        <Box sx={{ display: "flex", gap: 2, mb: 3, flexDirection: "column" }}>
           <TextField
             fullWidth
             label="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={blog.title}
+            onChange={handleTitleChange}
           />
-          <FormControl sx={{ minWidth: 120 }}>
+          <TextField
+            fullWidth
+            label="URL Slug"
+            value={blog.slug}
+            onChange={(e) =>
+              setBlog((prev) => ({ ...prev, slug: e.target.value }))
+            }
+            helperText="This will be the URL of your blog post"
+          />
+          <FormControl>
             <InputLabel>Status</InputLabel>
             <Select
-              value={status}
+              value={blog.status}
               label="Status"
-              onChange={(e) => setStatus(e.target.value)}
+              onChange={(e) =>
+                setBlog((prev) => ({
+                  ...prev,
+                  status: e.target.value as "draft" | "published",
+                }))
+              }
             >
               <MenuItem value="draft">Draft</MenuItem>
               <MenuItem value="published">Published</MenuItem>

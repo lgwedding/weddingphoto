@@ -16,40 +16,34 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  CircularProgress,
 } from "@mui/material";
 import { MdEdit, MdDelete, MdAdd } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
-interface Blog {
-  id: string;
-  title: string;
-  status: "draft" | "published";
-  createdAt: string;
-  updatedAt: string;
-}
-
-const dummyBlogs: Blog[] = [
-  {
-    id: "1",
-    title: "Wedding Photography Tips",
-    status: "published",
-    createdAt: "2024-03-15",
-    updatedAt: "2024-03-15",
-  },
-  {
-    id: "2",
-    title: "Best Locations for Engagement Photos",
-    status: "draft",
-    createdAt: "2024-03-14",
-    updatedAt: "2024-03-14",
-  },
-];
+import { Blog, blogService } from "@/app/_services/blog-service";
 
 export default function BlogList() {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
+
+  useEffect(() => {
+    loadBlogs();
+  }, []);
+
+  const loadBlogs = async () => {
+    try {
+      const data = await blogService.getBlogs();
+      setBlogs(data);
+    } catch (error) {
+      console.error("Error loading blogs:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleEdit = (blog: Blog) => {
     router.push(`/dashboard/blogs/${blog.id}`);
@@ -60,11 +54,27 @@ export default function BlogList() {
     setDeleteDialogOpen(true);
   };
 
-  const confirmDelete = () => {
-    // TODO: Implement delete functionality
-    setDeleteDialogOpen(false);
-    setSelectedBlog(null);
+  const confirmDelete = async () => {
+    if (!selectedBlog?.id) return;
+
+    try {
+      await blogService.deleteBlog(selectedBlog.id);
+      await loadBlogs();
+    } catch (error) {
+      console.error("Error deleting blog:", error);
+    } finally {
+      setDeleteDialogOpen(false);
+      setSelectedBlog(null);
+    }
   };
+
+  if (loading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -106,6 +116,7 @@ export default function BlogList() {
           <TableHead>
             <TableRow sx={{ bgcolor: "rgba(0,0,0,0.02)" }}>
               <TableCell sx={{ fontWeight: 600 }}>Title</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Slug</TableCell>
               <TableCell sx={{ fontWeight: 600 }}>Status</TableCell>
               <TableCell sx={{ fontWeight: 600 }}>Created</TableCell>
               <TableCell sx={{ fontWeight: 600 }}>Updated</TableCell>
@@ -113,7 +124,7 @@ export default function BlogList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {dummyBlogs.map((blog) => (
+            {blogs.map((blog) => (
               <TableRow
                 key={blog.id}
                 sx={{
@@ -123,6 +134,7 @@ export default function BlogList() {
                 }}
               >
                 <TableCell>{blog.title}</TableCell>
+                <TableCell>{blog.slug}</TableCell>
                 <TableCell>
                   <Chip
                     label={blog.status}
@@ -135,8 +147,12 @@ export default function BlogList() {
                     }}
                   />
                 </TableCell>
-                <TableCell>{blog.createdAt}</TableCell>
-                <TableCell>{blog.updatedAt}</TableCell>
+                <TableCell>
+                  {new Date(blog.createdAt as string).toLocaleDateString()}
+                </TableCell>
+                <TableCell>
+                  {new Date(blog.updatedAt as string).toLocaleDateString()}
+                </TableCell>
                 <TableCell>
                   <IconButton
                     onClick={() => handleEdit(blog)}
