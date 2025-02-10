@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   Drawer,
@@ -12,6 +13,7 @@ import {
   MdPhotoLibrary,
   MdSettings,
   MdPeople,
+  MdArticle,
 } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { Link as IntlLink } from "@/navigation";
@@ -24,6 +26,7 @@ export const adminMenuItems = [
   { label: "Gallery", icon: MdPhotoLibrary, path: "/dashboard/gallery" },
   { label: "Clients", icon: MdPeople, path: "/dashboard/clients" },
   { label: "Settings", icon: MdSettings, path: "/dashboard/settings" },
+  { label: "Blog Posts", icon: MdArticle, path: "/dashboard/blogs" },
 ];
 
 export default function AdminSidebar() {
