@@ -16,6 +16,7 @@ import { db } from "./firebase";
 export interface Blog {
   id?: string;
   title: string;
+  imageUrl: string;
   content: string;
   slug: string;
   status: "draft" | "published";

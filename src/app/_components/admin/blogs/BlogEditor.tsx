@@ -134,6 +134,7 @@ export default function BlogEditor({ blogId }: BlogEditorProps) {
       content: content,
       slug: blog.slug || blogService.generateSlug(blog.title),
       status: blog.status || "draft",
+      imageUrl: blog.imageUrl || "",
     };
 
     console.log("Attempting to save blog:", blogData);

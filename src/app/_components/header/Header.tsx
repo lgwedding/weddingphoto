@@ -58,6 +58,7 @@ export default function Header() {
   const baseMenuItems: any[] = [
     { label: t("portfolio"), href: "/portfolio" },
     { label: t("services"), href: "/services" },
+    { label: t("blog"), href: "/blog" },
     { label: t("about"), href: "/about" },
     { label: t("contact"), href: "/contact" },
   ];

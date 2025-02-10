@@ -1,6 +1,13 @@
 "use client";
 
-import { Box, Container, Typography, Grid, Paper } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Grid,
+  Paper,
+  CircularProgress,
+} from "@mui/material";
 import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
 import { useEffect, useState } from "react";
@@ -10,14 +17,67 @@ import Image from "next/image";
 
 export default function BlogPage() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadBlogs = async () => {
-      const data = await blogService.getBlogs();
-      setBlogs(data.filter((blog) => blog.status === "published"));
+      try {
+        const data = await blogService.getBlogs();
+        console.log(data);
+        setBlogs(data.filter((blog) => blog.status === "published"));
+      } catch (error) {
+        console.error("Error loading blogs:", error);
+        setError("Failed to load blog posts");
+      } finally {
+        setLoading(false);
+      }
     };
     loadBlogs();
   }, []);
+
+  if (loading) {
+    return (
+      <Box>
+        <Header />
+        <Box
+          sx={{
+            py: { xs: 12, md: 16 },
+            bgcolor: "#f8f8f8",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "50vh",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+        <Footer />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box>
+        <Header />
+        <Box sx={{ py: { xs: 12, md: 16 }, bgcolor: "#f8f8f8" }}>
+          <Container maxWidth="lg">
+            <Typography
+              variant="h5"
+              sx={{
+                textAlign: "center",
+                color: "error.main",
+              }}
+            >
+              {error}
+            </Typography>
+          </Container>
+        </Box>
+        <Footer />
+      </Box>
+    );
+  }
 
   return (
     <Box>
@@ -50,10 +110,10 @@ export default function BlogPage() {
           </Typography>
 
           <Grid container spacing={4}>
-            {blogs.map((blog) => (
-              <Grid item xs={12} md={4} key={blog.id}>
+            {blogs?.map((blog) => (
+              <Grid item xs={12} md={4} key={blog?.id}>
                 <Link
-                  href={`/blog/${blog.slug}`}
+                  href={`/blog/${blog?.slug}`}
                   style={{ textDecoration: "none" }}
                 >
                   <Paper
@@ -69,8 +129,8 @@ export default function BlogPage() {
                   >
                     <Box sx={{ position: "relative", height: 240 }}>
                       <Image
-                        src="https://source.unsplash.com/random"
-                        alt={blog.title}
+                        src={blog?.imageUrl}
+                        alt={blog?.title}
                         fill
                         style={{ objectFit: "cover" }}
                       />
@@ -98,7 +158,7 @@ export default function BlogPage() {
                         }}
                       >
                         {new Date(
-                          blog.createdAt as string
+                          blog?.createdAt as string
                         ).toLocaleDateString()}
                       </Typography>
                     </Box>

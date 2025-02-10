@@ -6,10 +6,12 @@
       "about": "Rólunk",
       "contact": "Kapcsolat",
       "login": "Bejelentkezés",
-      "logout": "Kijelentkezés"
+      "logout": "Kijelentkezés",
+      "blog": "Blog"
     },
     "brand": {
       "name": "SONDER",
+
       "description": "Időtlen pillanatok megörökítése művészi látásmóddal és időtlen eleganciával."
     }
   },
