@@ -1,53 +1,45 @@
-"use client";
-
-import { Box, Container, Typography, CircularProgress } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
-import { useEffect, useState } from "react";
-import { Blog, blogService } from "@/app/_services/blog-service";
-import { useParams } from "next/navigation";
+import { blogService } from "@/app/_services/blog-service";
 import { notFound } from "next/navigation";
 
-export default function BlogPostPage() {
-  const params = useParams();
-  const slug = params?.slug as string;
-  const [blog, setBlog] = useState<Blog | null>(null);
-  const [loading, setLoading] = useState(true);
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const blog = await blogService.getBlogBySlug(params.slug);
 
-  useEffect(() => {
-    const loadBlog = async () => {
-      try {
-        const data = await blogService.getBlogBySlug(slug);
-        if (!data || data.status !== "published") {
-          notFound();
-        }
-        setBlog(data);
-      } catch (error) {
-        console.error("Error loading blog:", error);
-        notFound();
-      } finally {
-        setLoading(false);
-      }
+  if (!blog) {
+    return {
+      title: "Blog Post Not Found",
     };
-    loadBlog();
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <Box
-        sx={{
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
   }
 
-  if (!blog) return null;
+  return {
+    title: `${blog.title} | SONDER Photography`,
+    description: blog.content?.substring(0, 160),
+    openGraph: {
+      title: blog.title,
+      description: blog.content?.substring(0, 160),
+      type: "article",
+      publishedTime: blog.createdAt,
+      modifiedTime: blog.updatedAt,
+    },
+  };
+}
+
+export default async function BlogPostPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const blog = await blogService.getBlogBySlug(params.slug);
+
+  if (!blog || blog.status !== "published") {
+    notFound();
+  }
 
   return (
     <Box>

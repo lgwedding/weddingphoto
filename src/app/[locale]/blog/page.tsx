@@ -1,83 +1,13 @@
-"use client";
-
-import {
-  Box,
-  Container,
-  Typography,
-  Grid,
-  Paper,
-  CircularProgress,
-} from "@mui/material";
+import { Box, Container, Typography, Grid, Paper } from "@mui/material";
 import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
-import { useEffect, useState } from "react";
 import { Blog, blogService } from "@/app/_services/blog-service";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function BlogPage() {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const loadBlogs = async () => {
-      try {
-        const data = await blogService.getBlogs();
-        console.log(data);
-        setBlogs(data.filter((blog) => blog.status === "published"));
-      } catch (error) {
-        console.error("Error loading blogs:", error);
-        setError("Failed to load blog posts");
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadBlogs();
-  }, []);
-
-  if (loading) {
-    return (
-      <Box>
-        <Header />
-        <Box
-          sx={{
-            py: { xs: 12, md: 16 },
-            bgcolor: "#f8f8f8",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "50vh",
-          }}
-        >
-          <CircularProgress />
-        </Box>
-        <Footer />
-      </Box>
-    );
-  }
-
-  if (error) {
-    return (
-      <Box>
-        <Header />
-        <Box sx={{ py: { xs: 12, md: 16 }, bgcolor: "#f8f8f8" }}>
-          <Container maxWidth="lg">
-            <Typography
-              variant="h5"
-              sx={{
-                textAlign: "center",
-                color: "error.main",
-              }}
-            >
-              {error}
-            </Typography>
-          </Container>
-        </Box>
-        <Footer />
-      </Box>
-    );
-  }
+export default async function BlogPage() {
+  const blogs = await blogService.getBlogs();
+  const publishedBlogs = blogs.filter((blog) => blog.status === "published");
 
   return (
     <Box>
@@ -110,7 +40,7 @@ export default function BlogPage() {
           </Typography>
 
           <Grid container spacing={4}>
-            {blogs?.map((blog) => (
+            {publishedBlogs.map((blog) => (
               <Grid item xs={12} md={4} key={blog?.id}>
                 <Link
                   href={`/blog/${blog?.slug}`}
