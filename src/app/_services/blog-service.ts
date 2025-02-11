@@ -1,0 +1,98 @@
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  getDocs,
+  getDoc,
+  query,
+  where,
+  orderBy,
+  Timestamp,
+} from "firebase/firestore";
+import { db } from "./firebase";
+
+export interface Blog {
+  id?: string;
+  title: string;
+  imageUrl: string;
+  content: string;
+  slug: string;
+  status: "draft" | "published";
+  createdAt: Timestamp | string;
+  updatedAt: Timestamp | string;
+}
+
+class BlogService {
+  private collection = "blogs";
+
+  async createBlog(blog: Omit<Blog, "id" | "createdAt" | "updatedAt">) {
+    const now = Timestamp.now();
+    const newBlog = {
+      ...blog,
+      createdAt: now,
+      updatedAt: now,
+    };
+    const docRef = await addDoc(collection(db, this.collection), newBlog);
+    return { id: docRef.id, ...newBlog };
+  }
+
+  async updateBlog(id: string, blog: Partial<Blog>) {
+    const docRef = doc(db, this.collection, id);
+    const updates = {
+      ...blog,
+      updatedAt: Timestamp.now(),
+    };
+    await updateDoc(docRef, updates);
+    return { id, ...updates };
+  }
+
+  async deleteBlog(id: string) {
+    const docRef = doc(db, this.collection, id);
+    await deleteDoc(docRef);
+  }
+
+  async getBlog(id: string) {
+    const docRef = doc(db, this.collection, id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() } as Blog;
+    }
+    return null;
+  }
+
+  async getBlogBySlug(slug: string) {
+    const q = query(
+      collection(db, this.collection),
+      where("slug", "==", slug),
+      where("status", "==", "published")
+    );
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0];
+      return { id: doc.id, ...doc.data() } as Blog;
+    }
+    return null;
+  }
+
+  async getBlogs() {
+    const q = query(
+      collection(db, this.collection),
+      orderBy("createdAt", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(
+      (doc) => ({ id: doc.id, ...doc.data() } as Blog)
+    );
+  }
+
+  generateSlug(title: string) {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+  }
+}
+
+export const blogService = new BlogService();

@@ -4,10 +4,14 @@
       "portfolio": "Portfólió",
       "services": "Szolgáltatások",
       "about": "Rólunk",
-      "contact": "Kapcsolat"
+      "contact": "Kapcsolat",
+      "login": "Bejelentkezés",
+      "logout": "Kijelentkezés",
+      "blog": "Blog"
     },
     "brand": {
       "name": "SONDER",
+
       "description": "Időtlen pillanatok megörökítése művészi látásmóddal és időtlen eleganciával."
     }
   },
@@ -107,7 +111,19 @@
   "auth": {
     "login": {
       "title": "Bejelentkezés",
-      "logout": "Kijelentkezés"
+      "error": "Hibás hitelesítő adatok",
+      "success": "Sikeres bejelentkezés"
+    },
+    "dashboard": {
+      "title": "Irányítópult",
+      "welcome": "Üdvözlünk"
     }
+  },
+  "blog": {
+    "title": "Blogunk",
+    "subtitle": "Legújabb hírek és érdekességek a Sonder Photography-ról",
+    "readMore": "Tovább olvasd",
+    "deleteConfirmation1": "Biztosan törölni szeretnéd a",
+    "deleteConfirmation2": "című bejegyzést?. Ez az művelet nem visszafordítható."
   }
 }

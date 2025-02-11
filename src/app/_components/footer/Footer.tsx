@@ -30,8 +30,8 @@ export default function Footer() {
     <footer
       style={{
         backgroundColor: "#ffffff",
-        paddingTop: "12px",
-        paddingBottom: "6px",
+        paddingTop: "30px",
+        paddingBottom: "30px",
       }}
     >
       <Container maxWidth="lg">

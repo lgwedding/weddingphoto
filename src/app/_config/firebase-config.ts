@@ -1,9 +1,10 @@
+import { env } from "./env.config";
+
 export const firebaseConfig = {
-  apiKey: "AIzaSyAtGUpDC1BcD_gSQmIlDX_SF8S_M7P5iuY",
-  authDomain: "weddingphoto-6e86f.firebaseapp.com",
-  projectId: "weddingphoto-6e86f",
-  storageBucket: "weddingphoto-6e86f.firebasestorage.app",
-  messagingSenderId: "207012204968",
-  appId: "1:207012204968:web:9e9e850ff77c9bf1884d9d",
-  measurementId: "G-GDH5K1JVSW",
-};
+  apiKey: env.FIREBASE_API_KEY,
+  authDomain: env.FIREBASE_AUTH_DOMAIN,
+  projectId: env.FIREBASE_PROJECT_ID,
+  storageBucket: env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: env.FIREBASE_APP_ID,
+} as const;

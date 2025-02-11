@@ -11,6 +11,7 @@ import {
   ListItem,
   Container,
   Fade,
+  Divider,
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -19,13 +20,36 @@ import { Link as IntlLink } from "@/navigation";
 import { useTranslations } from "next-intl";
 import { usePathname, useParams } from "next/navigation";
 import { GB, HU } from "country-flag-icons/react/3x2";
+import { useFirebaseAuthService } from "@/app/_services/firebase-auth-service";
+import UserWidget from "./UserWidget";
+import { adminMenuItems } from "../admin/AdminSidebar";
+import { MdLogin, MdLogout } from "react-icons/md";
+import { User } from "firebase/auth";
+
+type MenuItem = {
+  label: string;
+  href: string;
+  onClick?: () => void;
+  icon?: React.ReactNode;
+  isAuthButton?: boolean;
+};
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const t = useTranslations("common.menu");
   const pathname = usePathname();
   const { locale: currentLocale } = useParams();
+  const { getCurrentUser, logout } = useFirebaseAuthService();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const user = await getCurrentUser();
+      setIsAuthenticated(!!user);
+    };
+    checkAuth();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,15 +59,31 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const menuItems = [
+  const handleLogout = async () => {
+    await logout();
+    setIsAuthenticated(false);
+  };
+  //TODO add correct type
+  const baseMenuItems: MenuItem[] = [
     { label: t("portfolio"), href: "/portfolio" },
     { label: t("services"), href: "/services" },
+    { label: t("blog"), href: "/blog" },
     { label: t("about"), href: "/about" },
     { label: t("contact"), href: "/contact" },
-  ].map((item) => ({
-    ...item,
-    href: `/${currentLocale}${item.href}`,
-  }));
+  ];
+
+  const menuItems = isAuthenticated
+    ? baseMenuItems
+    : [
+        ...baseMenuItems,
+        {
+          label: t("login"),
+          href: "/login",
+          isAuthButton: true,
+          icon: <MdLogin />,
+          onClick: undefined,
+        },
+      ];
 
   const languages = [
     { code: "en", label: "English" },
@@ -127,6 +167,7 @@ export default function Header() {
                   <Button
                     key={item.label}
                     href={item.href}
+                    onClick={item.onClick}
                     sx={{
                       color: "#1a1a1a",
                       px: 2,
@@ -160,11 +201,30 @@ export default function Header() {
                           transform: "translateY(-2px)",
                         },
                       }),
+                      ...(item.isAuthButton && {
+                        bgcolor: isAuthenticated ? "#dc3545" : "transparent",
+                        color: isAuthenticated ? "white" : "#1a1a1a",
+                        border: isAuthenticated ? "none" : "2px solid #1a1a1a",
+                        ml: 2,
+                        "&:hover": {
+                          bgcolor: isAuthenticated ? "#c82333" : "#1a1a1a",
+                          color: "white",
+                          transform: "translateY(-2px)",
+                        },
+                      }),
                     }}
                   >
                     {item.label}
                   </Button>
                 ))}
+
+                {isAuthenticated ? (
+                  <UserWidget
+                    userEmail={
+                      (getCurrentUser() as unknown as User)?.email || ""
+                    }
+                  />
+                ) : null}
 
                 <Box sx={{ ml: 2, display: "flex", gap: 1 }}>
                   {languages
@@ -217,6 +277,7 @@ export default function Header() {
                   display: { xs: "block", md: "none" },
                   "& .MuiDrawer-paper": {
                     width: "100%",
+                    zIndex: 200,
                     maxWidth: "300px",
                     bgcolor: "rgba(255, 255, 255, 0.98)",
                     backdropFilter: "blur(10px)",
@@ -252,34 +313,92 @@ export default function Header() {
                     sx={{ display: "flex", flexDirection: "column", gap: 2 }}
                   >
                     {menuItems.map((item) => (
-                      <ListItem key={item.label} disablePadding>
-                        <Button
-                          fullWidth
-                          href={item.href}
-                          onClick={handleDrawerToggle}
-                          sx={{
-                            color: "#1a1a1a",
-                            justifyContent: "flex-start",
-                            py: 1.5,
-                            borderRadius: "12px",
-                            transition: "all 0.2s ease",
-                            "&:hover": {
-                              bgcolor: "rgba(0,0,0,0.05)",
-                              transform: "translateX(8px)",
-                            },
-                            ...(item.label === t("contact") && {
-                              bgcolor: "#1a1a1a",
-                              color: "white",
+                      <>
+                        {item?.icon && (
+                          <Box sx={{ my: 2 }}>
+                            <Divider />
+                          </Box>
+                        )}
+                        <ListItem key={item.label} disablePadding>
+                          <Button
+                            fullWidth
+                            href={item.href}
+                            onClick={handleDrawerToggle}
+                            sx={{
+                              color: "#1a1a1a",
+                              justifyContent: "flex-start",
+                              py: 1.5,
+                              borderRadius: "12px",
+                              transition: "all 0.2s ease",
                               "&:hover": {
-                                bgcolor: "#333",
+                                bgcolor: "rgba(0,0,0,0.05)",
+                                transform: "translateX(8px)",
                               },
-                            }),
-                          }}
-                        >
-                          {item.label}
-                        </Button>
-                      </ListItem>
+                            }}
+                            startIcon={item?.icon || null}
+                          >
+                            {item.label}
+                          </Button>
+                        </ListItem>
+                      </>
                     ))}
+
+                    {isAuthenticated && (
+                      <>
+                        <Box sx={{ my: 2 }}>
+                          <Divider />
+                        </Box>
+                        {adminMenuItems.map((item) => (
+                          <ListItem key={item.label} disablePadding>
+                            <Button
+                              fullWidth
+                              component={IntlLink}
+                              href={item.path}
+                              onClick={handleDrawerToggle}
+                              sx={{
+                                color: "#1a1a1a",
+                                justifyContent: "flex-start",
+                                py: 1.5,
+                                borderRadius: "12px",
+                                transition: "all 0.2s ease",
+                                "&:hover": {
+                                  bgcolor: "rgba(0,0,0,0.05)",
+                                  transform: "translateX(8px)",
+                                },
+                              }}
+                            >
+                              {item.label}
+                            </Button>
+                          </ListItem>
+                        ))}
+                        <Box sx={{ my: 2 }}>
+                          <Divider />
+                        </Box>
+                        <ListItem disablePadding>
+                          <Button
+                            fullWidth
+                            onClick={() => {
+                              handleLogout();
+                              handleDrawerToggle();
+                            }}
+                            sx={{
+                              color: "#dc3545",
+                              justifyContent: "flex-start",
+                              py: 1.5,
+                              borderRadius: "12px",
+                              transition: "all 0.2s ease",
+                              "&:hover": {
+                                bgcolor: "rgba(220, 53, 69, 0.1)",
+                                transform: "translateX(8px)",
+                              },
+                            }}
+                            startIcon={<MdLogout />}
+                          >
+                            {t("logout")}
+                          </Button>
+                        </ListItem>
+                      </>
+                    )}
                   </List>
                 </Box>
               </Drawer>
