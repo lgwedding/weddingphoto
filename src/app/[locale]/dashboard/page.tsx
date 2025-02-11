@@ -96,7 +96,7 @@ export default function Dashboard() {
     };
 
     initDashboard();
-  }, []);
+  }, [getCurrentUser, router]);
 
   if (loading) {
     return (

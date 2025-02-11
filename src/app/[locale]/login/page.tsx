@@ -12,14 +12,14 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { MdLockOutline } from "react-icons/md";
-import { firebaseAuthService } from "@/app/_services/firebase-auth-service";
+import { useFirebaseAuthService } from "@/app/_services/firebase-auth-service";
 import { useTranslations } from "next-intl";
 
 export default function LoginPage() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { login } = firebaseAuthService();
+  const { login } = useFirebaseAuthService();
   const t = useTranslations("auth.login");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,7 +30,7 @@ export default function LoginPage() {
     const result = await login(credentials);
 
     if (!result.success) {
-      setError(result.error);
+      setError(result.error || "An unknown error occurred");
     }
 
     setLoading(false);
