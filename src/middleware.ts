@@ -1,17 +1,35 @@
-import createMiddleware from "next-intl/middleware";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import createIntlMiddleware from "next-intl/middleware";
 import { locales, defaultLocale } from "./i18n/settings";
 
-export default createMiddleware({
-  // A list of all locales that are supported
-  locales: locales,
+const protectedPages = ["/dashboard", "/admin"];
 
-  // If this locale is matched, pathnames work without a prefix (e.g. `/about`)
-  defaultLocale: defaultLocale,
-
+const intlMiddleware = createIntlMiddleware({
+  locales,
+  defaultLocale,
   localePrefix: "always",
 });
 
+export default async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  // Check if the page needs authentication
+  const isProtectedPage = protectedPages.some((page) =>
+    pathname.includes(page)
+  );
+
+  if (isProtectedPage) {
+    const token = request.cookies.get("auth_token");
+    if (!token) {
+      const loginUrl = new URL("/login", request.url);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
+
+  return intlMiddleware(request);
+}
+
 export const config = {
-  // Skip all paths that should not be internationalized
   matcher: ["/((?!api|_next|.*\\..*).*)"],
 };

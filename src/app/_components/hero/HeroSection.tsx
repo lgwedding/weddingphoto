@@ -24,7 +24,7 @@ export default function HeroSection({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        mb: 8,
+        mt: 8,
       }}
     >
       <Fade in timeout={1000}>
