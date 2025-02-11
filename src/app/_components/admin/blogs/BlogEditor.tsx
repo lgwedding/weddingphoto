@@ -13,15 +13,98 @@ import {
   IconButton,
   CircularProgress,
 } from "@mui/material";
-import { MdArrowBack, MdSave } from "react-icons/md";
+import { MdArrowBack, MdSave, MdAdd } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useRouter } from "next/navigation";
 import { Blog, blogService } from "@/app/_services/blog-service";
+import Image from "next/image";
 
 interface BlogEditorProps {
   blogId?: string;
+}
+
+interface ImageUploadProps {
+  imageUrl: string;
+  onImageUpload: (url: string) => void;
+}
+
+function ImageUpload({ imageUrl, onImageUpload }: ImageUploadProps) {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleUrlSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const url = formData.get("imageUrl") as string;
+    if (url) {
+      onImageUpload(url);
+      setIsEditing(false);
+    }
+  };
+
+  return (
+    <Box sx={{ mb: 3 }}>
+      {isEditing ? (
+        <form onSubmit={handleUrlSubmit}>
+          <Box sx={{ display: "flex", gap: 1 }}>
+            <TextField
+              fullWidth
+              name="imageUrl"
+              label="Image URL"
+              defaultValue={imageUrl}
+              size="small"
+            />
+            <Button type="submit" variant="contained" size="small">
+              Save
+            </Button>
+            <Button size="small" onClick={() => setIsEditing(false)}>
+              Cancel
+            </Button>
+          </Box>
+        </form>
+      ) : (
+        <Box
+          onClick={() => setIsEditing(true)}
+          sx={{
+            position: "relative",
+            width: "100%",
+            height: 200,
+            borderRadius: 2,
+            overflow: "hidden",
+            bgcolor: "#f5f5f5",
+            cursor: "pointer",
+            "&:hover": {
+              opacity: 0.9,
+            },
+          }}
+        >
+          {imageUrl ? (
+            <Image
+              src={imageUrl}
+              alt="Blog header"
+              fill
+              style={{ objectFit: "cover" }}
+            />
+          ) : (
+            <Box
+              sx={{
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+                gap: 1,
+              }}
+            >
+              <MdAdd size={24} />
+              <Typography>Add Header Image URL</Typography>
+            </Box>
+          )}
+        </Box>
+      )}
+    </Box>
+  );
 }
 
 const MenuBar = ({ editor }: any) => {
@@ -85,6 +168,7 @@ export default function BlogEditor({ blogId }: BlogEditorProps) {
     slug: "",
     status: "draft",
     content: "",
+    imageUrl: "",
   });
 
   const editor = useEditor({
@@ -214,6 +298,12 @@ export default function BlogEditor({ blogId }: BlogEditorProps) {
         }}
       >
         <Box sx={{ display: "flex", gap: 2, mb: 3, flexDirection: "column" }}>
+          <ImageUpload
+            imageUrl={blog.imageUrl || ""}
+            onImageUpload={(url) =>
+              setBlog((prev) => ({ ...prev, imageUrl: url }))
+            }
+          />
           <TextField
             fullWidth
             label="Title"
