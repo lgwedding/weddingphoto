@@ -1,7 +1,7 @@
 import { Box, Container, Typography, Grid, Paper } from "@mui/material";
 import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
-import { Blog, blogService } from "@/app/_services/blog-service";
+import { blogService } from "@/app/_services/blog-service";
 import Link from "next/link";
 import Image from "next/image";
 

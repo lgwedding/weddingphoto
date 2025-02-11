@@ -22,6 +22,7 @@ import { MdEdit, MdDelete, MdAdd } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Blog, blogService } from "@/app/_services/blog-service";
+import { useTranslations } from "next-intl";
 
 export default function BlogList() {
   const router = useRouter();
@@ -29,6 +30,7 @@ export default function BlogList() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
+  const t = useTranslations("blog");
 
   useEffect(() => {
     loadBlogs();
@@ -179,8 +181,9 @@ export default function BlogList() {
       >
         <DialogTitle>Delete Blog Post</DialogTitle>
         <DialogContent>
-          Are you sure you want to delete "{selectedBlog?.title}"? This action
-          cannot be undone.
+          {`${t("deleteConfirmation1")} ${selectedBlog?.title} ${t(
+            "deleteConfirmation2"
+          )}`}
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>

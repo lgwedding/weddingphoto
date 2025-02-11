@@ -10,9 +10,8 @@ import {
   CircularProgress,
 } from "@mui/material";
 import dynamic from "next/dynamic";
-import { firebaseAuthService } from "@/app/_services/firebase-auth-service";
+import { useFirebaseAuthService } from "@/app/_services/firebase-auth-service";
 import { useRouter } from "next/navigation";
-import Header from "@/app/_components/header/Header";
 import StatCard from "@/app/_components/dashboard/StatCard";
 import {
   MdAttachMoney,
@@ -84,7 +83,7 @@ const lineChartOptions: ApexOptions = {
 export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const { getCurrentUser } = firebaseAuthService();
+  const { getCurrentUser } = useFirebaseAuthService();
 
   useEffect(() => {
     const initDashboard = async () => {

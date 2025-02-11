@@ -10,8 +10,7 @@ import {
 } from "@mui/material";
 import { MdDashboard, MdPerson, MdLogout } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
-import { firebaseAuthService } from "@/app/_services/firebase-auth-service";
+import { useFirebaseAuthService } from "@/app/_services/firebase-auth-service";
 
 interface UserWidgetProps {
   userEmail?: string;
@@ -20,8 +19,7 @@ interface UserWidgetProps {
 export default function UserWidget({ userEmail }: UserWidgetProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const router = useRouter();
-  const t = useTranslations("common.userMenu");
-  const { logout } = firebaseAuthService();
+  const { logout } = useFirebaseAuthService();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

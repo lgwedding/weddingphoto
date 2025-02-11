@@ -7,7 +7,7 @@ import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../_config/firebase-config";
 import { useRouter } from "next/navigation";
 
-export const firebaseAuthService = () => {
+export const useFirebaseAuthService = () => {
   const app = initializeApp(firebaseConfig);
   const authService = getAuth(app);
   const router = useRouter();
@@ -31,10 +31,16 @@ export const firebaseAuthService = () => {
 
       router.push(`/dashboard`);
       return { success: true, user };
-    } catch (error: any) {
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return {
+          success: false,
+          error: error.message,
+        };
+      }
       return {
         success: false,
-        error: error.message,
+        error: "An unknown error occurred",
       };
     }
   };
@@ -46,10 +52,16 @@ export const firebaseAuthService = () => {
         "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
       router.push(`/`);
       return { success: true };
-    } catch (error: any) {
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return {
+          success: false,
+          error: error.message,
+        };
+      }
       return {
         success: false,
-        error: error.message,
+        error: "An unknown error occurred",
       };
     }
   };

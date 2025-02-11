@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { MdArrowBack, MdSave, MdAdd } from "react-icons/md";
 import { useEffect, useState } from "react";
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor, EditorContent, Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useRouter } from "next/navigation";
 import { Blog, blogService } from "@/app/_services/blog-service";
@@ -107,7 +107,7 @@ function ImageUpload({ imageUrl, onImageUpload }: ImageUploadProps) {
   );
 }
 
-const MenuBar = ({ editor }: any) => {
+const MenuBar = ({ editor }: { editor: Editor | null }) => {
   if (!editor) {
     return null;
   }

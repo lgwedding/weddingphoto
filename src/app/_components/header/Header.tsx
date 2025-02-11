@@ -20,10 +20,19 @@ import { Link as IntlLink } from "@/navigation";
 import { useTranslations } from "next-intl";
 import { usePathname, useParams } from "next/navigation";
 import { GB, HU } from "country-flag-icons/react/3x2";
-import { firebaseAuthService } from "@/app/_services/firebase-auth-service";
+import { useFirebaseAuthService } from "@/app/_services/firebase-auth-service";
 import UserWidget from "./UserWidget";
 import { adminMenuItems } from "../admin/AdminSidebar";
 import { MdLogin, MdLogout } from "react-icons/md";
+import { User } from "firebase/auth";
+
+type MenuItem = {
+  label: string;
+  href: string;
+  onClick?: () => void;
+  icon?: React.ReactNode;
+  isAuthButton?: boolean;
+};
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -32,7 +41,7 @@ export default function Header() {
   const t = useTranslations("common.menu");
   const pathname = usePathname();
   const { locale: currentLocale } = useParams();
-  const { getCurrentUser, logout } = firebaseAuthService();
+  const { getCurrentUser, logout } = useFirebaseAuthService();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -55,7 +64,7 @@ export default function Header() {
     setIsAuthenticated(false);
   };
   //TODO add correct type
-  const baseMenuItems: any[] = [
+  const baseMenuItems: MenuItem[] = [
     { label: t("portfolio"), href: "/portfolio" },
     { label: t("services"), href: "/services" },
     { label: t("blog"), href: "/blog" },
@@ -72,6 +81,7 @@ export default function Header() {
           href: "/login",
           isAuthButton: true,
           icon: <MdLogin />,
+          onClick: undefined,
         },
       ];
 
@@ -210,7 +220,9 @@ export default function Header() {
 
                 {isAuthenticated ? (
                   <UserWidget
-                    userEmail={(getCurrentUser() as any)?.email || ""}
+                    userEmail={
+                      (getCurrentUser() as unknown as User)?.email || ""
+                    }
                   />
                 ) : null}
 

@@ -115,5 +115,12 @@
       "title": "Dashboard",
       "welcome": "Welcome back"
     }
+  },
+  "blog": {
+    "title": "Our Blog",
+    "subtitle": "Latest News and Insights from Sonder Photography",
+    "readMore": "Read More",
+    "deleteConfirmation1": "Are you sure you want to delete the",
+    "deleteConfirmation2": "named blog post? This action cannot be undone."
   }
 }

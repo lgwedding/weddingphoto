@@ -3,14 +3,6 @@ import type { NextRequest } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
 import { locales, defaultLocale } from "./i18n/settings";
 
-const publicPages = [
-  "/",
-  "/about",
-  "/contact",
-  "/portfolio",
-  "/services",
-  "/login",
-];
 const protectedPages = ["/dashboard", "/admin"];
 
 const intlMiddleware = createIntlMiddleware({
