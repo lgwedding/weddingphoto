@@ -5,12 +5,11 @@ import { blogService } from "@/app/_services/blog-service";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const blog = await blogService.getBlogBySlug(params.slug);
+type Params = Promise<{ slug: string }>;
+
+export async function generateMetadata({ params }: { params: Params }) {
+  const { slug } = await params;
+  const blog = await blogService.getBlogBySlug(slug);
 
   if (!blog) {
     return {

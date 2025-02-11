@@ -49,7 +49,7 @@ export default function Header() {
       setIsAuthenticated(!!user);
     };
     checkAuth();
-  }, []);
+  }, [getCurrentUser]);
 
   useEffect(() => {
     const handleScroll = () => {
