@@ -106,3 +106,38 @@ export default async function BlogPage() {
     </Box>
   );
 }
+type Params = Promise<{ locale: "en" | "hu" }>;
+export async function generateMetadata({ params }: { params: Params }) {
+  const locale = await params;
+
+  return {
+    title: "Blog | SONDER Photography",
+    description:
+      "Photography tips, wedding inspiration, and behind-the-scenes stories from professional wedding photographers in Hungary.",
+    alternates: {
+      canonical: `https://yourdomain.com/${locale}/blog`,
+      languages: {
+        en: "/en/blog",
+        hu: "/hu/blog",
+      },
+    },
+    openGraph: {
+      title: "SONDER Photography Blog",
+      description: "Wedding photography insights and inspiration",
+      images: [
+        {
+          url: "https://images.unsplash.com/photo-1499750310107-5fef28a66643",
+          width: 1200,
+          height: 630,
+          alt: "SONDER Photography Blog",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "SONDER Photography Blog",
+      description: "Wedding photography insights and inspiration",
+      images: ["https://images.unsplash.com/photo-1499750310107-5fef28a66643"],
+    },
+  };
+}

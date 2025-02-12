@@ -5,11 +5,15 @@ import { blogService } from "@/app/_services/blog-service";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 
-type Params = Promise<{ slug: string }>;
+type Params = Promise<{
+  locale: "en" | "hu";
+  slug: string;
+}>;
 
 export async function generateMetadata({ params }: { params: Params }) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const blog = await blogService.getBlogBySlug(slug);
+  console.log("blog", slug, locale);
 
   if (!blog) {
     return {
@@ -23,10 +27,18 @@ export async function generateMetadata({ params }: { params: Params }) {
   return {
     title: `${blog.title} | SONDER Photography`,
     description: blog.content?.substring(0, 160),
+    alternates: {
+      canonical: `https://yourdomain.com/${locale}/blog/${slug}`,
+      languages: {
+        en: `/en/blog/${slug}`,
+        hu: `/hu/blog/${slug}`,
+      },
+    },
     openGraph: {
       title: blog.title,
       description: blog.content?.substring(0, 160),
       type: "article",
+      url: `https://yourdomain.com/${locale}/blog/${slug}`,
       images: [
         {
           url: blog.imageUrl || defaultImage,
@@ -47,12 +59,9 @@ export async function generateMetadata({ params }: { params: Params }) {
   };
 }
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const blog = await blogService.getBlogBySlug(params.slug);
+export default async function BlogPostPage({ params }: { params: Params }) {
+  const { slug } = await params;
+  const blog = await blogService.getBlogBySlug(slug);
 
   if (!blog || blog.status !== "published") {
     notFound();
