@@ -29,10 +29,10 @@ export default function ContactForm() {
 
     try {
       const result = await emailjs.sendForm(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         form.current!,
-        "YOUR_PUBLIC_KEY"
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
 
       if (result.text === "OK") {
@@ -77,24 +77,13 @@ export default function ContactForm() {
           {t("form.title")}
         </Typography>
 
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label={t("form.firstName")}
-              name="first_name"
-              required
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              fullWidth
-              label={t("form.lastName")}
-              name="last_name"
-              required
-            />
-          </Grid>
-        </Grid>
+        <TextField
+          fullWidth
+          label={t("form.fullName")}
+          name="from_name"
+          required
+          sx={{ mb: 3 }}
+        />
 
         <TextField
           fullWidth

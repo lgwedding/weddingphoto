@@ -31,8 +31,7 @@
     "subtitle": "Alkossunk együtt valami gyönyörűt. Keressen minket bármely csatornán keresztül, vagy töltse ki az űrlapot.",
     "form": {
       "title": "Vedd fel velünk a kapcsolatot",
-      "firstName": "Keresztnév",
-      "lastName": "Vezetéknév",
+      "fullName": "Teljes név",
       "email": "Email",
       "phone": "Telefon",
       "message": "Üzenet",
