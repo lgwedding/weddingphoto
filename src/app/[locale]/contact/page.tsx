@@ -5,15 +5,19 @@ import {
   Grid,
   TextField,
   Button,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import Image from "next/image";
 import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { useTranslations } from "next-intl";
+import ContactForm from "@/app/_components/contact/ContactForm";
 
 export default function Contact() {
   const t = useTranslations("contact");
+
   const contactInfo = [
     {
       icon: FaPhone,
@@ -164,118 +168,7 @@ export default function Contact() {
 
             {/* Right Side - Contact Form */}
             <Grid item xs={12} md={7}>
-              <Box
-                sx={{
-                  bgcolor: "rgba(255,255,255,0.95)",
-                  backdropFilter: "blur(20px)",
-                  borderRadius: 4,
-                  p: { xs: 4, md: 6 },
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
-                }}
-              >
-                <Typography
-                  variant="h4"
-                  sx={{
-                    mb: 4,
-                    fontWeight: 600,
-                    background: "linear-gradient(90deg, #1a1a1a, #333)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
-                >
-                  {t("form.title")}
-                </Typography>
-
-                <Box
-                  component="form"
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 3,
-                  }}
-                >
-                  <Grid container spacing={3}>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        fullWidth
-                        label={t("form.firstName")}
-                        variant="outlined"
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            backgroundColor: "white",
-                          },
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        fullWidth
-                        label={t("form.lastName")}
-                        variant="outlined"
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            backgroundColor: "white",
-                          },
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
-
-                  <TextField
-                    fullWidth
-                    label={t("form.email")}
-                    variant="outlined"
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        backgroundColor: "white",
-                      },
-                    }}
-                  />
-
-                  <TextField
-                    fullWidth
-                    label={t("form.phone")}
-                    variant="outlined"
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        backgroundColor: "white",
-                      },
-                    }}
-                  />
-
-                  <TextField
-                    fullWidth
-                    label={t("form.message")}
-                    multiline
-                    rows={6}
-                    variant="outlined"
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        backgroundColor: "white",
-                      },
-                    }}
-                  />
-
-                  <Button
-                    variant="contained"
-                    size="large"
-                    sx={{
-                      bgcolor: "#1a1a1a",
-                      color: "white",
-                      py: 2,
-                      px: 6,
-                      borderRadius: "30px",
-                      "&:hover": {
-                        bgcolor: "#333",
-                        transform: "translateY(-2px)",
-                      },
-                      transition: "all 0.3s ease",
-                    }}
-                  >
-                    {t("form.submit")}
-                  </Button>
-                </Box>
-              </Box>
+              <ContactForm />
             </Grid>
           </Grid>
         </Container>
