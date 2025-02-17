@@ -25,7 +25,7 @@ import UserWidget from "./UserWidget";
 import { adminMenuItems } from "../admin/AdminSidebar";
 import { MdLogin, MdLogout } from "react-icons/md";
 import { User } from "firebase/auth";
-
+import ThemeToggle from "../admin/ThemeToggle";
 type MenuItem = {
   label: string;
   href: string;
@@ -219,11 +219,14 @@ export default function Header() {
                 ))}
 
                 {isAuthenticated ? (
-                  <UserWidget
-                    userEmail={
-                      (getCurrentUser() as unknown as User)?.email || ""
-                    }
-                  />
+                  <>
+                    <ThemeToggle />
+                    <UserWidget
+                      userEmail={
+                        (getCurrentUser() as unknown as User)?.email || ""
+                      }
+                    />
+                  </>
                 ) : null}
 
                 <Box sx={{ ml: 2, display: "flex", gap: 1 }}>
