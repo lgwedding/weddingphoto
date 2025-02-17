@@ -12,15 +12,18 @@ export default function ThemeToggle() {
       onClick={toggleTheme}
       sx={{
         position: "relative",
-        width: 48,
-        height: 48,
-        borderRadius: "14px",
-        background: isDarkMode
-          ? "linear-gradient(135deg, #1a1a1a 0%, #333 100%)"
-          : "linear-gradient(135deg, #e0e0e0 0%, #ffffff 100%)",
+        width: 40,
+        height: 40,
+        borderRadius: 50,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        bgcolor: isDarkMode ? "background.paper" : "#1a1a1a",
+        color: isDarkMode ? "text.primary" : "white",
         transition: "all 0.3s ease",
         "&:hover": {
-          transform: "scale(1.05)",
+          bgcolor: isDarkMode ? "rgba(0,0,0,0.04)" : "#333",
+          transform: "translateY(-2px)",
         },
       }}
     >
@@ -37,10 +40,10 @@ export default function ThemeToggle() {
         >
           <Box
             sx={{
-              width: 24,
-              height: 24,
+              width: 20,
+              height: 20,
+              marginBottom: 0.5,
               position: "relative",
-              color: isDarkMode ? "#fff" : "#1a1a1a",
             }}
           >
             {isDarkMode ? (

@@ -28,7 +28,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         </AppBar>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Header />
-          <Box sx={{ display: "flex", flex: 1 }}>
+          <Box sx={{ display: "flex", flex: 1, bgcolor: "background.paper" }}>
             <AdminSidebar />
             <Box
               component="main"

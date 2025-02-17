@@ -104,6 +104,7 @@ export default function BlogList() {
           onClick={() => router.push("/dashboard/blogs/new")}
           sx={{
             bgcolor: "#1a1a1a",
+            color: "white",
             "&:hover": {
               bgcolor: "#333",
             },
@@ -177,7 +178,7 @@ export default function BlogList() {
                 <TableCell>
                   <IconButton
                     onClick={() => handleEdit(blog)}
-                    sx={{ color: "#1a1a1a" }}
+                    sx={{ color: "text.primary" }}
                   >
                     <MdEdit />
                   </IconButton>
