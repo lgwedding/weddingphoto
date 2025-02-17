@@ -4,7 +4,7 @@ import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
 import HeroSection from "@/app/_components/hero/HeroSection";
 import { useTranslations } from "next-intl";
-
+import { env } from "@/app/_config/env.config";
 export default function Home() {
   const t = useTranslations("home");
 
@@ -12,9 +12,9 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "PhotographyBusiness",
     name: "SONDER Photography",
-    image: "https://yourdomain.com/logo.jpg",
-    "@id": "https://yourdomain.com",
-    url: "https://yourdomain.com",
+    image: `${env.SITE_URL}/logo.jpg`,
+    "@id": `${env.SITE_URL}`,
+    url: `${env.SITE_URL}`,
     telephone: "+1-555-123-4567",
     address: {
       "@type": "PostalAddress",

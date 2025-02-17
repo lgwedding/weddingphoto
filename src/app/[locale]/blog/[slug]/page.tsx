@@ -5,6 +5,7 @@ import { blogService } from "@/app/_services/blog-service";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import ShareButtons from "@/app/_components/blog/ShareButtons";
+import { env } from "@/app/_config/env.config";
 
 type Params = Promise<{
   locale: "en" | "hu";
@@ -29,17 +30,17 @@ export async function generateMetadata({ params }: { params: Params }) {
     title: `${blog.title} | SONDER Photography`,
     description: blog.content?.substring(0, 160),
     alternates: {
-      canonical: `https://yourdomain.com/${locale}/blog/${slug}`,
+      canonical: `${env.SITE_URL}/${locale}/blog/${slug}`,
       languages: {
-        en: `/en/blog/${slug}`,
-        hu: `/hu/blog/${slug}`,
+        en: `${env.SITE_URL}/en/blog/${slug}`,
+        hu: `${env.SITE_URL}/hu/blog/${slug}`,
       },
     },
     openGraph: {
       title: blog.title,
       description: blog.content?.substring(0, 160),
       type: "article",
-      url: `https://yourdomain.com/${locale}/blog/${slug}`,
+      url: `${env.SITE_URL}/${locale}/blog/${slug}`,
       images: [
         {
           url: blog.imageUrl || defaultImage,

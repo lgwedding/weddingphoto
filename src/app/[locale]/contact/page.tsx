@@ -14,7 +14,7 @@ import Footer from "@/app/_components/footer/Footer";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 import ContactForm from "@/app/_components/contact/ContactForm";
-
+import { env } from "@/app/_config/env.config";
 export default function Contact() {
   const t = useTranslations("contact");
 
@@ -183,16 +183,16 @@ export default function Contact() {
 }
 type Params = Promise<{ locale: "en" | "hu" }>;
 export async function generateMetadata({ params }: { params: Params }) {
-  const locale = await params;
+  const { locale } = await params;
   return {
     title: "Contact Us | SONDER Photography",
     description:
       "Get in touch with SONDER Photography for your wedding photography needs. Based in Hungary, available for destination weddings.",
     alternates: {
-      canonical: `https://yourdomain.com/${locale}/contact`,
+      canonical: `${env.SITE_URL}/${locale}/contact`,
       languages: {
-        en: "/en/contact",
-        hu: "/hu/contact",
+        en: `${env.SITE_URL}/en/contact`,
+        hu: `${env.SITE_URL}/hu/contact`,
       },
     },
     openGraph: {

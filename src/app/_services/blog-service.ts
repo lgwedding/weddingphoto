@@ -107,9 +107,13 @@ class BlogService {
 
   generateSlug(title: string) {
     return title
+      .normalize("NFKD") // Normalize Unicode characters
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
+      .trim()
+      .replace(/\s+/g, "-") // Replace spaces with hyphens
+      .replace(/[^\p{L}\p{N}-]/gu, "") // Keep only letters, numbers and hyphens using Unicode properties
+      .replace(/-+/g, "-") // Replace multiple hyphens with single hyphen
+      .replace(/^-|-$/g, ""); // Remove leading and trailing hyphens
   }
 }
 
