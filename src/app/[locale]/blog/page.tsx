@@ -90,9 +90,7 @@ export default async function BlogPage() {
                           fontSize: "0.875rem",
                         }}
                       >
-                        {new Date(
-                          blog?.createdAt as string
-                        ).toLocaleDateString()}
+                        {new Date(blog.createdAt.toDate()).toLocaleDateString()}
                       </Typography>
                     </Box>
                   </Paper>

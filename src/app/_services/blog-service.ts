@@ -20,8 +20,8 @@ export interface Blog {
   content: string;
   slug: string;
   status: "draft" | "published";
-  createdAt: Timestamp | string;
-  updatedAt: Timestamp | string;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
 }
 
 class BlogService {
@@ -57,7 +57,13 @@ class BlogService {
     const docRef = doc(db, this.collection, id);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      return { id: docSnap.id, ...docSnap.data() } as Blog;
+      const data = docSnap.data();
+      return {
+        id: docSnap.id,
+        ...data,
+        createdAt: data.createdAt as Timestamp,
+        updatedAt: data.updatedAt as Timestamp,
+      } as Blog;
     }
     return null;
   }
@@ -71,7 +77,13 @@ class BlogService {
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
       const doc = querySnapshot.docs[0];
-      return { id: doc.id, ...doc.data() } as Blog;
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        createdAt: data.createdAt as Timestamp,
+        updatedAt: data.updatedAt as Timestamp,
+      } as Blog;
     }
     return null;
   }
@@ -82,9 +94,15 @@ class BlogService {
       orderBy("createdAt", "desc")
     );
     const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map(
-      (doc) => ({ id: doc.id, ...doc.data() } as Blog)
-    );
+    return querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        createdAt: data.createdAt as Timestamp,
+        updatedAt: data.updatedAt as Timestamp,
+      } as Blog;
+    });
   }
 
   generateSlug(title: string) {

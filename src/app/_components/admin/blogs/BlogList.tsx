@@ -150,10 +150,10 @@ export default function BlogList() {
                   />
                 </TableCell>
                 <TableCell>
-                  {new Date(blog.createdAt as string).toLocaleDateString()}
+                  {new Date(blog.createdAt.toDate()).toLocaleDateString()}
                 </TableCell>
                 <TableCell>
-                  {new Date(blog.updatedAt as string).toLocaleDateString()}
+                  {new Date(blog.updatedAt.toDate()).toLocaleDateString()}
                 </TableCell>
                 <TableCell>
                   <IconButton

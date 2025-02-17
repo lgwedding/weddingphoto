@@ -111,7 +111,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
               fontSize: "1rem",
             }}
           >
-            {new Date(blog.createdAt as string).toLocaleDateString()}
+            {new Date(blog.createdAt.toDate()).toLocaleDateString()}
           </Typography>
           <Box
             sx={{
