@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import {
   Avatar,
@@ -40,19 +42,29 @@ export default function UserWidget({ userEmail }: UserWidgetProps) {
   };
 
   return (
-    <Box sx={{ ml: 2 }}>
+    <Box>
       <IconButton
         onClick={handleMenu}
         sx={{
-          padding: 0.5,
-          border: "2px solid #1a1a1a",
+          padding: 1,
           transition: "all 0.2s ease",
           "&:hover": {
             transform: "translateY(-2px)",
           },
         }}
       >
-        <Avatar sx={{ width: 32, height: 32, bgcolor: "#1a1a1a" }}>
+        <Avatar
+          sx={{
+            width: 32,
+            height: 32,
+            bgcolor: "background.paper",
+            color: "text.primary",
+            border: "2px solid",
+            borderColor: "text.primary",
+            fontSize: "0.875rem",
+            fontWeight: 500,
+          }}
+        >
           {userEmail?.[0]?.toUpperCase()}
         </Avatar>
       </IconButton>
@@ -62,32 +74,38 @@ export default function UserWidget({ userEmail }: UserWidgetProps) {
         onClose={handleClose}
         PaperProps={{
           sx: {
-            mt: 1.5,
-            minWidth: 180,
+            mt: 1,
+            minWidth: 200,
             borderRadius: 2,
-            boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+            bgcolor: "background.paper",
+            border: "1px solid",
+            borderColor: "divider",
           },
         }}
-        sx={{
-          "& .MuiMenu-paper": {
-            overflow: "visible",
-          },
-        }}
-        disableScrollLock={true}
-        keepMounted
+        disableScrollLock
       >
-        <MenuItem onClick={() => handleNavigate("/dashboard")}>
-          <MdDashboard style={{ marginRight: 8 }} />
-          <Typography>Admin Dashboard</Typography>
+        <MenuItem onClick={() => handleNavigate("/dashboard")} sx={{ py: 1 }}>
+          <MdDashboard size={18} style={{ marginRight: 12 }} />
+          <Typography variant="body2">Dashboard</Typography>
         </MenuItem>
-        <MenuItem onClick={() => handleNavigate("/profile")}>
-          <MdPerson style={{ marginRight: 8 }} />
-          <Typography>Profile</Typography>
+        <MenuItem onClick={() => handleNavigate("/profile")} sx={{ py: 1 }}>
+          <MdPerson size={18} style={{ marginRight: 12 }} />
+          <Typography variant="body2">Profile</Typography>
         </MenuItem>
-        <Divider sx={{ my: 1 }} />
-        <MenuItem onClick={handleLogout} sx={{ color: "error.main" }}>
-          <MdLogout style={{ marginRight: 8 }} />
-          <Typography>Logout</Typography>
+        <Divider />
+        <MenuItem
+          onClick={handleLogout}
+          sx={{
+            py: 1,
+            color: "error.main",
+            "&:hover": {
+              bgcolor: "error.main",
+              color: "white",
+            },
+          }}
+        >
+          <MdLogout size={18} style={{ marginRight: 12 }} />
+          <Typography variant="body2">Logout</Typography>
         </MenuItem>
       </Menu>
     </Box>

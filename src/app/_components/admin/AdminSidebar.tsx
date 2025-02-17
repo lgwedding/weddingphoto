@@ -38,7 +38,6 @@ export default function AdminSidebar() {
       variant="permanent"
       sx={{
         width: DRAWER_WIDTH,
-        backgroundColor: "background.default",
         flexShrink: 0,
         zIndex: 100,
         height: "100%",

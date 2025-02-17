@@ -33,7 +33,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     palette: {
       mode: isDarkMode ? "dark" : "light",
       background: {
-        default: isDarkMode ? "#121212" : "#f8f8f8",
+        default: isDarkMode ? "rgb(200,200,200)" : "whitesmoke",
         paper: isDarkMode ? "#1e1e1e" : "#ffffff",
       },
       text: {

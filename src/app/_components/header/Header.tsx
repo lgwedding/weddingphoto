@@ -219,14 +219,11 @@ export default function Header() {
                 ))}
 
                 {isAuthenticated ? (
-                  <>
-                    <ThemeToggle />
-                    <UserWidget
-                      userEmail={
-                        (getCurrentUser() as unknown as User)?.email || ""
-                      }
-                    />
-                  </>
+                  <UserWidget
+                    userEmail={
+                      (getCurrentUser() as unknown as User)?.email || ""
+                    }
+                  />
                 ) : null}
 
                 <Box sx={{ ml: 2, display: "flex", gap: 1 }}>
