@@ -4,6 +4,7 @@ import Footer from "@/app/_components/footer/Footer";
 import { blogService } from "@/app/_services/blog-service";
 import Link from "next/link";
 import Image from "next/image";
+import { env } from "@/app/_config/env.config";
 
 export default async function BlogPage() {
   const blogs = await blogService.getBlogs();
@@ -90,9 +91,7 @@ export default async function BlogPage() {
                           fontSize: "0.875rem",
                         }}
                       >
-                        {new Date(
-                          blog?.createdAt as string
-                        ).toLocaleDateString()}
+                        {new Date(blog.createdAt.toDate()).toLocaleDateString()}
                       </Typography>
                     </Box>
                   </Paper>
@@ -108,17 +107,17 @@ export default async function BlogPage() {
 }
 type Params = Promise<{ locale: "en" | "hu" }>;
 export async function generateMetadata({ params }: { params: Params }) {
-  const locale = await params;
+  const { locale } = await params;
 
   return {
     title: "Blog | SONDER Photography",
     description:
       "Photography tips, wedding inspiration, and behind-the-scenes stories from professional wedding photographers in Hungary.",
     alternates: {
-      canonical: `https://yourdomain.com/${locale}/blog`,
+      canonical: `${env.SITE_URL}/${locale}/blog`,
       languages: {
-        en: "/en/blog",
-        hu: "/hu/blog",
+        en: `${env.SITE_URL}/en/blog`,
+        hu: `${env.SITE_URL}/hu/blog`,
       },
     },
     openGraph: {

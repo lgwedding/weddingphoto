@@ -72,8 +72,15 @@ export default function BlogList() {
 
   if (loading) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
-        <CircularProgress />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mt: 4,
+          color: "text.primary",
+        }}
+      >
+        <CircularProgress color="inherit" />
       </Box>
     );
   }
@@ -97,6 +104,7 @@ export default function BlogList() {
           onClick={() => router.push("/dashboard/blogs/new")}
           sx={{
             bgcolor: "#1a1a1a",
+            color: "white",
             "&:hover": {
               bgcolor: "#333",
             },
@@ -116,13 +124,25 @@ export default function BlogList() {
       >
         <Table>
           <TableHead>
-            <TableRow sx={{ bgcolor: "rgba(0,0,0,0.02)" }}>
-              <TableCell sx={{ fontWeight: 600 }}>Title</TableCell>
-              <TableCell sx={{ fontWeight: 600 }}>Slug</TableCell>
-              <TableCell sx={{ fontWeight: 600 }}>Status</TableCell>
-              <TableCell sx={{ fontWeight: 600 }}>Created</TableCell>
-              <TableCell sx={{ fontWeight: 600 }}>Updated</TableCell>
-              <TableCell sx={{ fontWeight: 600 }}>Actions</TableCell>
+            <TableRow>
+              <TableCell sx={{ fontWeight: 600, color: "text.primary" }}>
+                Title
+              </TableCell>
+              <TableCell sx={{ fontWeight: 600, color: "text.primary" }}>
+                Slug
+              </TableCell>
+              <TableCell sx={{ fontWeight: 600, color: "text.primary" }}>
+                Status
+              </TableCell>
+              <TableCell sx={{ fontWeight: 600, color: "text.primary" }}>
+                Created
+              </TableCell>
+              <TableCell sx={{ fontWeight: 600, color: "text.primary" }}>
+                Updated
+              </TableCell>
+              <TableCell sx={{ fontWeight: 600, color: "text.primary" }}>
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -150,15 +170,15 @@ export default function BlogList() {
                   />
                 </TableCell>
                 <TableCell>
-                  {new Date(blog.createdAt as string).toLocaleDateString()}
+                  {new Date(blog.createdAt.toDate()).toLocaleDateString()}
                 </TableCell>
                 <TableCell>
-                  {new Date(blog.updatedAt as string).toLocaleDateString()}
+                  {new Date(blog.updatedAt.toDate()).toLocaleDateString()}
                 </TableCell>
                 <TableCell>
                   <IconButton
                     onClick={() => handleEdit(blog)}
-                    sx={{ color: "#1a1a1a" }}
+                    sx={{ color: "text.primary" }}
                   >
                     <MdEdit />
                   </IconButton>

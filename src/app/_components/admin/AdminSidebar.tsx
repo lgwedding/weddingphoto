@@ -40,17 +40,24 @@ export default function AdminSidebar() {
         flexShrink: 0,
         zIndex: 100,
         height: "100%",
+        background: "background.paper",
         display: { xs: "none", md: "block" },
         "& .MuiDrawer-paper": {
           width: DRAWER_WIDTH,
           boxSizing: "border-box",
           borderRight: "1px solid rgba(0,0,0,0.08)",
-          bgcolor: "white",
+          bgcolor: "background.paper",
           height: "100%",
         },
       }}
     >
-      <Box sx={{ p: 3, marginTop: `${HEADER_HEIGHT}px` }}>
+      <Box
+        sx={{
+          p: 3,
+          marginTop: `${HEADER_HEIGHT}px`,
+          bgcolor: "background.paper",
+        }}
+      >
         <Typography
           variant="h6"
           sx={{
@@ -63,7 +70,7 @@ export default function AdminSidebar() {
           Admin Panel
         </Typography>
       </Box>
-      <List>
+      <List sx={{ bgcolor: "background.paper" }}>
         {adminMenuItems.map((item) => (
           <ListItem
             key={item.label}

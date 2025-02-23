@@ -5,7 +5,7 @@ import Footer from "@/app/_components/footer/Footer";
 import Masonry from "@mui/lab/Masonry";
 import HeroSection from "@/app/_components/hero/HeroSection";
 import { useTranslations } from "next-intl";
-
+import { env } from "@/app/_config/env.config";
 const portfolioImages = [
   {
     src: "https://images.unsplash.com/photo-1519741497674-611481863552",
@@ -137,16 +137,16 @@ export default function Portfolio() {
 }
 type Params = Promise<{ locale: "en" | "hu" }>;
 export async function generateMetadata({ params }: { params: Params }) {
-  const locale = await params;
+  const { locale } = await params;
   return {
     title: `Portfolio | SONDER Photography`,
     description:
       "Browse our collection of wedding photography showcasing timeless moments and artistic vision",
     alternates: {
-      canonical: `https://yourdomain.com/${locale}/portfolio`,
+      canonical: `${env.SITE_URL}/${locale}/portfolio`,
       languages: {
-        en: "/en/portfolio",
-        hu: "/hu/portfolio",
+        en: `${env.SITE_URL}/en/portfolio`,
+        hu: `${env.SITE_URL}/hu/portfolio`,
       },
     },
     openGraph: {

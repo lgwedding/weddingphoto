@@ -4,6 +4,8 @@ import Footer from "@/app/_components/footer/Footer";
 import { blogService } from "@/app/_services/blog-service";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import ShareButtons from "@/app/_components/blog/ShareButtons";
+import { env } from "@/app/_config/env.config";
 
 type Params = Promise<{
   locale: "en" | "hu";
@@ -28,17 +30,17 @@ export async function generateMetadata({ params }: { params: Params }) {
     title: `${blog.title} | SONDER Photography`,
     description: blog.content?.substring(0, 160),
     alternates: {
-      canonical: `https://yourdomain.com/${locale}/blog/${slug}`,
+      canonical: `${env.SITE_URL}/${locale}/blog/${slug}`,
       languages: {
-        en: `/en/blog/${slug}`,
-        hu: `/hu/blog/${slug}`,
+        en: `${env.SITE_URL}/en/blog/${slug}`,
+        hu: `${env.SITE_URL}/hu/blog/${slug}`,
       },
     },
     openGraph: {
       title: blog.title,
       description: blog.content?.substring(0, 160),
       type: "article",
-      url: `https://yourdomain.com/${locale}/blog/${slug}`,
+      url: `${env.SITE_URL}/${locale}/blog/${slug}`,
       images: [
         {
           url: blog.imageUrl || defaultImage,
@@ -60,12 +62,41 @@ export async function generateMetadata({ params }: { params: Params }) {
 }
 
 export default async function BlogPostPage({ params }: { params: Params }) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const blog = await blogService.getBlogBySlug(slug);
 
   if (!blog || blog.status !== "published") {
     notFound();
   }
+
+  const defaultImage =
+    "https://images.unsplash.com/photo-1499750310107-5fef28a66643";
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: blog.title,
+    image: blog.imageUrl || defaultImage,
+    datePublished: blog.createdAt.toDate().toISOString(),
+    dateModified: blog.updatedAt.toDate().toISOString(),
+    author: {
+      "@type": "Organization",
+      name: "SONDER Photography",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "SONDER Photography",
+      logo: {
+        "@type": "ImageObject",
+        url: `${process.env.NEXT_PUBLIC_SITE_URL}/logo.jpg`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${process.env.NEXT_PUBLIC_SITE_URL}/${locale}/blog/${slug}`,
+    },
+    description: blog.content?.substring(0, 160),
+  };
 
   return (
     <Box>
@@ -90,6 +121,11 @@ export default async function BlogPostPage({ params }: { params: Params }) {
                 style={{ objectFit: "cover" }}
                 priority
               />
+              <ShareButtons
+                url={`${process.env.NEXT_PUBLIC_SITE_URL}/${locale}/blog/${slug}`}
+                title={blog.title}
+                description={blog.content?.substring(0, 160)}
+              />
             </Box>
           )}
           <Typography
@@ -111,13 +147,15 @@ export default async function BlogPostPage({ params }: { params: Params }) {
               fontSize: "1rem",
             }}
           >
-            {new Date(blog.createdAt as string).toLocaleDateString()}
+            {new Date(blog.createdAt.toDate()).toLocaleDateString()}
           </Typography>
           <Box
             sx={{
               bgcolor: "white",
               p: { xs: 3, md: 6 },
               borderRadius: 2,
+              fontFamily: "var(--font-main)",
+              color: "black",
               "& img": {
                 maxWidth: "100%",
                 height: "auto",
@@ -130,6 +168,10 @@ export default async function BlogPostPage({ params }: { params: Params }) {
         </Container>
       </Box>
       <Footer />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Box>
   );
 }

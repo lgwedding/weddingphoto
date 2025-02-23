@@ -4,7 +4,7 @@ import Header from "@/app/_components/header/Header";
 import Footer from "@/app/_components/footer/Footer";
 import HeroSection from "@/app/_components/hero/HeroSection";
 import { useTranslations } from "next-intl";
-
+import { env } from "@/app/_config/env.config";
 const teamMembers = [
   {
     name: "Sarah Johnson",
@@ -176,16 +176,16 @@ export default function About() {
 }
 type Params = Promise<{ locale: "en" | "hu" }>;
 export async function generateMetadata({ params }: { params: Params }) {
-  const locale = await params;
+  const { locale } = await params;
   return {
     title: "About Us | SONDER Photography",
     description:
       "Professional wedding photography team in Hungary. Learn about our passion for capturing timeless moments and our artistic approach.",
     alternates: {
-      canonical: `https://yourdomain.com/${locale}/about`,
+      canonical: `${env.SITE_URL}/${locale}/about`,
       languages: {
-        en: "/en/about",
-        hu: "/hu/about",
+        en: `${env.SITE_URL}/en/about`,
+        hu: `${env.SITE_URL}/hu/about`,
       },
     },
     openGraph: {

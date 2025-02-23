@@ -5,7 +5,7 @@ import Footer from "@/app/_components/footer/Footer";
 import { FaCamera, FaVideo, FaGlobe, FaEnvelope } from "react-icons/fa";
 import HeroSection from "@/app/_components/hero/HeroSection";
 import { useTranslations } from "next-intl";
-
+import { env } from "@/app/_config/env.config";
 const services = [
   {
     title: "Wedding Photography",
@@ -184,16 +184,16 @@ export default function Services() {
 }
 type Params = Promise<{ locale: "en" | "hu" }>;
 export async function generateMetadata({ params }: { params: Params }) {
-  const locale = await params;
+  const { locale } = await params;
   return {
     title: "Wedding Photography Services | SONDER Photography",
     description:
       "Comprehensive wedding photography services including engagement sessions, full-day coverage, videography, and custom wedding websites.",
     alternates: {
-      canonical: `https://yourdomain.com/${locale}/services`,
+      canonical: `${env.SITE_URL}/${locale}/services`,
       languages: {
-        en: "/en/services",
-        hu: "/hu/services",
+        en: `${env.SITE_URL}/en/services`,
+        hu: `${env.SITE_URL}/hu/services`,
       },
     },
     openGraph: {

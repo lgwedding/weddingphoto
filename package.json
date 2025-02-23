@@ -1,6 +1,6 @@
 {
   "name": "weddingphotosite",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.3",
@@ -23,6 +24,7 @@
     "apexcharts": "^4.4.0",
     "country-flag-icons": "^1.5.16",
     "firebase": "^11.2.0",
+    "framer-motion": "^12.4.3",
     "next": "15.1.5",
     "next-intl": "^3.26.3",
     "react": "^19.0.0",
