@@ -17,7 +17,6 @@ import {
 } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { Link as IntlLink } from "@/navigation";
-import { ThemeProvider } from "@/app/_contexts/ThemeContext";
 
 const DRAWER_WIDTH = 240;
 const HEADER_HEIGHT = 80;

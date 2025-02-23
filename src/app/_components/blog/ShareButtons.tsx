@@ -1,5 +1,5 @@
 "use client";
-import { Box, IconButton, Tooltip, Modal, Fade } from "@mui/material";
+import { Box, IconButton, Modal, Fade } from "@mui/material";
 import { FaFacebookF, FaLinkedinIn, FaWhatsapp, FaCopy } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { useState } from "react";
