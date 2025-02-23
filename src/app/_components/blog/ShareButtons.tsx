@@ -23,22 +23,30 @@ export default function ShareButtons({
     {
       name: "Facebook",
       icon: FaFacebookF,
-      href: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        url
+      )}`,
     },
     {
       name: "X",
       icon: FaXTwitter,
-      href: `https://x.com/intent/tweet?url=${url}&text=${title}`,
+      href: `https://x.com/intent/tweet?url=${encodeURIComponent(
+        url
+      )}&text=${encodeURIComponent(title)}`,
     },
     {
       name: "LinkedIn",
       icon: FaLinkedinIn,
-      href: `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${title}&summary=${description}`,
+      href: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+        url
+      )}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(
+        description
+      )}`,
     },
     {
       name: "WhatsApp",
       icon: FaWhatsapp,
-      href: `https://wa.me/?text=${`${title} ${url}`}`,
+      href: `https://wa.me/?text=${encodeURIComponent(`${title} ${url}`)}`,
     },
   ];
 
