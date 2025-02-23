@@ -1,4 +1,8 @@
-import { Box } from "@mui/material";
+"use client";
+
+import { Box, AppBar, Toolbar, Typography } from "@mui/material";
+import { ThemeProvider } from "@/app/_contexts/ThemeContext";
+import ThemeToggle from "./ThemeToggle";
 import Header from "../header/Header";
 import AdminSidebar from "./AdminSidebar";
 
@@ -8,24 +12,47 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <Header />
-      <Box sx={{ display: "flex", flex: 1 }}>
-        <AdminSidebar />
+    <ThemeProvider>
+      <Box sx={{ minHeight: "100vh" }}>
+        <AppBar position="fixed" sx={{ bgcolor: "background.paper" }}>
+          <Toolbar>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, color: "text.primary" }}
+            ></Typography>
+          </Toolbar>
+        </AppBar>
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Header />
+          <Box sx={{ display: "flex", flex: 1, bgcolor: "background.paper" }}>
+            <AdminSidebar />
+            <Box
+              component="main"
+              sx={{
+                flexGrow: 1,
+                p: { xs: 2, md: 3 },
+                ml: { xs: 0 },
+                bgcolor: "background.default",
+                minHeight: "100vh",
+                width: "100%",
+              }}
+            >
+              {children}
+            </Box>
+          </Box>
+        </Box>
         <Box
-          component="main"
           sx={{
-            flexGrow: 1,
-            p: { xs: 2, md: 3 },
-            ml: { xs: 0 },
-            bgcolor: "#f5f5f5",
-            minHeight: "100vh",
-            width: "100%",
+            position: "fixed",
+            bottom: 24,
+            right: 24,
+            zIndex: 1000,
           }}
         >
-          {children}
+          <ThemeToggle />
         </Box>
       </Box>
-    </Box>
+    </ThemeProvider>
   );
 }

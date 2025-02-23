@@ -25,7 +25,6 @@ import UserWidget from "./UserWidget";
 import { adminMenuItems } from "../admin/AdminSidebar";
 import { MdLogin, MdLogout } from "react-icons/md";
 import { User } from "firebase/auth";
-
 type MenuItem = {
   label: string;
   href: string;
