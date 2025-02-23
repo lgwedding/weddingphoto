@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { env } from "@/app/_config/env.config";
 export default function Home() {
   const t = useTranslations("home");
-
+  // TODO: USE FRAMER_MOTION
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "PhotographyBusiness",
