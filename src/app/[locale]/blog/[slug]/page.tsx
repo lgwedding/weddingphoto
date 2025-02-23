@@ -88,12 +88,12 @@ export default async function BlogPostPage({ params }: { params: Params }) {
       name: "SONDER Photography",
       logo: {
         "@type": "ImageObject",
-        url: `${process.env.NEXT_PUBLIC_SITE_URL}/logo.jpg`,
+        url: `${env.SITE_URL}/logo.jpg`,
       },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${process.env.NEXT_PUBLIC_SITE_URL}/${locale}/blog/${slug}`,
+      "@id": `${env.SITE_URL}/${locale}/blog/${slug}`,
     },
     description: blog.content?.substring(0, 160),
   };
@@ -122,7 +122,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
                 priority
               />
               <ShareButtons
-                url={`${process.env.NEXT_PUBLIC_SITE_URL}/${locale}/blog/${slug}`}
+                url={`${env.SITE_URL}/${locale}/blog/${slug}`}
                 title={blog.title}
                 description={blog.content?.substring(0, 160)}
               />
