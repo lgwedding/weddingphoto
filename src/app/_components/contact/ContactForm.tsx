@@ -43,6 +43,7 @@ export default function ContactForm() {
     } catch (error) {
       setSnackbarMessage(t("form.errorMessage"));
       setSnackbarSeverity("error");
+      console.log(error);
       setOpenSnackbar(true);
     }
 
