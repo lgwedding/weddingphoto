@@ -38,7 +38,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <HeroSection
-        imageUrl="https://images.unsplash.com/photo-1519741497674-611481863552"
+        imageUrl="/hero_img.jpg"
         title={t("hero.title")}
         subtitle={t("hero.subtitle")}
         height="100vh"
