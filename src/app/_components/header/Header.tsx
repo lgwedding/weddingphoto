@@ -50,6 +50,14 @@ export default function Header() {
     checkAuth();
   }, [getCurrentUser]);
 
+  const [logoBgPos, setLogoBgPos] = useState("100% 0%");
+
+  useEffect(() => {
+    // Animate from right to left on mount
+    const timeout = setTimeout(() => setLogoBgPos("0% 0%"), 800);
+    return () => clearTimeout(timeout);
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -141,19 +149,25 @@ export default function Header() {
                 <Typography
                   variant="h6"
                   sx={{
-                    background: "linear-gradient(45deg, #1a1a1a 30%, #666 90%)",
+                    background:
+                      "linear-gradient(90deg, #1a1a1a 30%, rgb(155, 106, 0) 90%)",
+                    backgroundSize: "200% 100%",
+                    backgroundPosition: logoBgPos,
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     fontWeight: 700,
                     letterSpacing: "-0.5px",
                     fontSize: scrolled ? "1.25rem" : "1.5rem",
-                    transition: "all 0.3s ease",
+                    transition:
+                      "all 0.8s ease, background-position 0.8s cubic-bezier(0.4,0,0.2,1)",
+                    "&:hover": {
+                      backgroundPosition: "100% 0%",
+                    },
                   }}
                 >
                   SONDER
                 </Typography>
               </IntlLink>
-
               {/* Desktop Menu */}
               <Box
                 sx={{

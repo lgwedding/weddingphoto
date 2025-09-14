@@ -74,10 +74,10 @@ export default function Portfolio() {
 
       {/* Hero Section */}
       <HeroSection
-        imageUrl="https://images.unsplash.com/photo-1519741497674-611481863552"
+        imageUrl="/portfolio_hero.jpg"
         title={t("title")}
         subtitle={t("subtitle")}
-        height="50vh"
+        height="70vh"
       />
 
       {/* Portfolio Gallery */}
